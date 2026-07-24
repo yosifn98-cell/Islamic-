@@ -3,139 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مەنارەی سەرکەوتن</title>
+    <title>مەنارەی سەرکەوتن Pro</title>
 
-    <!-- iOS & PWA App Features (Apple Touch Icon & Manifest) -->
+    <!-- iOS & PWA Configuration -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="مەنارەی سەرکەوتن">
     <meta name="theme-color" content="#022c22">
 
-    <!-- Apple Touch Icon (Logo generated specifically for iOS Home Screen) -->
+    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'><rect width='512' height='512' rx='120' fill='%23022c22'/><rect x='10' y='10' width='492' height='492' rx='110' fill='none' stroke='%23d97706' stroke-width='8'/><path d='M256 70c-100 0-180 80-180 180s80 180 180 180c25 0 49-5 71-15-70-20-120-85-120-165s50-145 120-165c-22-10-46-15-71-15z' fill='%23fbbf24'/><path d='M350 140l15 35 35 15-35 15-15 35-15-35-35-15 35-15z' fill='%23f59e0b'/></svg>">
     
-    <!-- Standard Favicon -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%23022c22'/><path d='M256 70c-100 0-180 80-180 180s80 180 180 180c25 0 49-5 71-15-70-20-120-85-120-165s50-145 120-165c-22-10-46-15-71-15z' fill='%23fbbf24'/></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
         .quran-font { font-family: 'Noto Naskh Arabic', serif; }
         .emerald-gradient { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); }
+        .gold-glow { box-shadow: 0 0 25px rgba(217, 119, 6, 0.25); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white pb-10">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white pb-20">
 
     <!-- Header Navigation -->
-    <header class="border-b border-emerald-500/20 bg-slate-900/90 backdrop-blur sticky top-0 z-50 p-4 pt-8">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+    <header class="border-b border-emerald-500/20 bg-slate-900/95 backdrop-blur sticky top-0 z-50 p-4 pt-6">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
             <div class="flex items-center space-x-3 space-x-reverse">
-                <!-- App Logo Image/SVG Icon -->
-                <div class="w-10 h-10 rounded-2xl bg-slate-950 p-1 border border-amber-500/40 flex items-center justify-center shadow-lg">
+                <div class="w-11 h-11 rounded-2xl bg-slate-950 p-1 border border-amber-500/40 flex items-center justify-center gold-glow">
                     <svg class="w-7 h-7 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold text-amber-400 tracking-wide">مەنارەی سەرکەوتن</h1>
-                    <p class="text-[11px] text-emerald-400">وەدیهێنانی خەون و ئامانجەکان بە قورئانی پیرۆز</p>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-xl font-extrabold text-amber-400 tracking-wide">مەنارەی سەرکەوتن</h1>
+                        <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">Pro 2.0</span>
+                    </div>
+                    <p class="text-[11px] text-emerald-400">وەدیهێنانی خەونەکان بە گوێرەی قورئانی پیرۆز</p>
                 </div>
             </div>
 
-            <!-- Header Quote -->
-            <div class="hidden md:flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-xl border border-emerald-500/20">
-                <span class="quran-font text-amber-300 text-sm">﴿ وَأَن لَّيْسَ لِلإِنسَانِ إِلاَّ مَا سَعَى ﴾</span>
+            <!-- Streak & Stat badge -->
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center gap-2">
+                    <span class="text-amber-400">🔥</span>
+                    <span class="text-slate-400 text-[11px]">بەردەوامی:</span>
+                    <span id="streakCount" class="font-bold text-amber-400">1 ڕۆژ</span>
+                </div>
             </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="max-w-7xl mx-auto flex gap-2 pt-4 overflow-x-auto hide-scrollbar text-xs">
+            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-amber-500 text-slate-950">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                <span>ئامانجەکانم</span>
+            </button>
+            <button onclick="switchTab('ai-coach')" id="tab-ai-coach" class="px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-slate-800 text-slate-300 hover:text-white">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span>ڕێنیشاندەری AI</span>
+            </button>
+            <button onclick="switchTab('tasbih')" id="tab-tasbih" class="px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-slate-800 text-slate-300 hover:text-white">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>تەسبیح و وێرد</span>
+            </button>
+            <button onclick="switchTab('focus')" id="tab-focus" class="px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-slate-800 text-slate-300 hover:text-white">
+                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                <span>تایمەری بەرەکەت</span>
+            </button>
+            <button onclick="switchTab('library')" id="tab-library" class="px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-slate-800 text-slate-300 hover:text-white">
+                <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span>کتێبخانەی دوعا</span>
+            </button>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Body Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6">
 
-        <!-- Left Column: Primary Islamic Pillars & AI Guidance -->
-        <div class="lg:col-span-2 space-y-8">
-
-            <!-- Hero Banner -->
-            <div class="emerald-gradient border border-emerald-500/30 rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-2xl shadow-emerald-950/40">
-                <div class="space-y-4 relative z-10">
-                    <span class="bg-amber-500/20 text-amber-300 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/30">یاسای گەردوونی سەرکەوتن</span>
-                    <h2 class="text-2xl md:text-3xl font-bold text-white leading-relaxed">
-                        خەونەکانت مەحاڵ نین کاتێک لەگەڵ <span class="text-amber-400">یارمەتی پەروەردگار</span> و <span class="text-emerald-400">کۆششی ڕاستەقینەدا</span> یەکتری دەگرنەوە
+        <!-- TAB 1: DASHBOARD & GOALS ROADMAP -->
+        <div id="view-dashboard" class="space-y-6">
+            <!-- Hero Motivational Banner -->
+            <div class="emerald-gradient border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden shadow-2xl">
+                <div class="space-y-3 relative z-10">
+                    <span class="bg-amber-500/20 text-amber-300 text-[11px] font-bold px-3 py-1 rounded-full border border-amber-500/30">یاسای ئیسلامیی بەدیهێنان</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-white leading-relaxed">
+                        ﴿ وَأَن لَّيْسَ لِلإِنسَانِ إِلاَّ مَا سَعَى ﴾
                     </h2>
-                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed max-w-2xl">
-                        ئیسلام ئاینێکی کار و پەرستشە. بۆ گەیشتن بە خەونەکانت، پێویستت بە پاککردنەوەی نیەت، بەکارهێنانی هۆکارە زەمینییەکان، بەردەوامی لە دوعا و سپاردنی ئاکامەکانە بە زاتی ئەڵڵاهـ.
+                    <p class="text-xs text-slate-300 leading-relaxed max-w-2xl">
+                        هیچ خەونێک بە بێ کارکردن نایەتە دی. نیەتەکەت بۆ خودا ڕاستبکەرەوە، هەنگاوەکانت تۆماربکە و دەرئەنجامەکە بپێرە بە تەواوی بە پەروەردگار.
                     </p>
                 </div>
             </div>
 
-            <!-- AI Goal & Dream Coach Feature -->
-            <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 space-y-5 shadow-xl">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <div class="p-2 bg-amber-500/10 text-amber-400 rounded-xl">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Add New Goal Form -->
+                <div class="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4 shadow-xl">
+                    <h3 class="font-bold text-amber-400 text-sm border-b border-slate-800 pb-3 flex justify-between items-center">
+                        <span>تۆمارکردنی خەونی نوێ</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">پلانی ٧ هەنگاوی</span>
+                    </h3>
+
+                    <form id="goalForm" onsubmit="addGoal(event)" class="space-y-3">
                         <div>
-                            <h3 class="font-bold text-amber-400 text-base">ڕێنمای ژیری دەستکرد بۆ خەونەکانت</h3>
-                            <p class="text-xs text-slate-400">خەونەکەت بنووسە تا ڕێنمایی قورئان و سوننەتت بۆ ئامادە بکات</p>
+                            <label class="text-xs text-slate-400 block mb-1">ناونیشانی خەونەکە</label>
+                            <input type="text" id="goalTitle" required placeholder="بۆ نموونە: کردنەوەی پڕۆژەی حەڵاڵ" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
                         </div>
+
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">نیەت (النيّة)</label>
+                            <input type="text" id="goalNiyyah" required placeholder="بۆ نموونە: بۆ خزمەتی خێزان و بەخشینی سەدەقە" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">هەنگاوی کرداری سەرەکی (الأخذ بالأسباب)</label>
+                            <input type="text" id="goalAction" required placeholder="بۆ نموونە: ڕۆژانە ١ کاتژمێر فێربوون" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition shadow-lg shadow-amber-950/20">
+                            زیادکردن بۆ لیستی خەونەکانم
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Goals List -->
+                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <h3 class="font-bold text-slate-200 text-sm">لیستی خەونەکان و نەخشەرێگا</h3>
+                        <span id="goalCount" class="text-xs bg-slate-800 text-amber-400 px-2.5 py-1 rounded-full font-bold">0</span>
+                    </div>
+
+                    <div id="goalsList" class="space-y-4">
+                        <!-- Dynamic Goals JS Rendered -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: AI ISLAMIC GOAL COACH -->
+        <div id="view-ai-coach" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 space-y-5 shadow-xl">
+                <div class="flex items-center space-x-3 space-x-reverse border-b border-slate-800 pb-4">
+                    <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-amber-400 text-base">ڕێنیشاندەری ژیری دەستکرد بۆ خەونەکانت</h3>
+                        <p class="text-xs text-slate-400">خەونەکەت دەستنیشان بکە تا پلانی ئیسلامیی و دوعای گونجاوت بۆ دەربکات</p>
                     </div>
                 </div>
 
+                <!-- Preset Prompts -->
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <button onclick="setPrompt('دەمەوێت پڕۆژەیەکی بازرگانی حەڵاڵ دروستبکەم')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">🏢 پڕۆژەی حەڵاڵ</button>
+                    <button onclick="setPrompt('دەمەوێت لە خوێندندا نمرەی زۆر بەرز بەدەست بێنم')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">🎓 سەرکەوتنی خوێندن</button>
+                    <button onclick="setPrompt('دەمەوێت لە نەخۆشی یان خەمۆکی ڕزگارم ببێت')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">🌿 شیفا و تەندروستی</button>
+                    <button onclick="setPrompt('دەمەوێت خانوو یان ئۆتۆمبێل بە حەڵاڵی بکڕم')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">🏠 کڕینی خانوو</button>
+                </div>
+
                 <div class="space-y-3">
-                    <textarea id="dreamInput" rows="3" placeholder="بۆ نموونە: دەمەوێت کۆمپانیایەک یان خوێندن تەواو بکەم..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs text-slate-200 focus:outline-none focus:border-amber-500 transition"></textarea>
+                    <textarea id="dreamInput" rows="3" placeholder="خەونەکەت لێرە بنووسە بە ڕوونی..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs text-slate-200 focus:outline-none focus:border-amber-500 transition"></textarea>
 
                     <button id="getAiAdviceBtn" onclick="generateIslamicAdvice()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-2xl text-xs shadow-lg shadow-emerald-950/50 transition flex justify-center items-center gap-2">
-                        <span>وەرگرتنی ڕێنمایی لە قورئان و سوننەتدا</span>
+                        <span>وەرگرتنی شیکاری بە ئایەت و فەرموودە</span>
                     </button>
                 </div>
 
                 <div id="aiResponseBox" class="hidden bg-slate-950 rounded-2xl p-5 border border-slate-800 text-xs text-slate-300 leading-relaxed space-y-4">
                 </div>
             </div>
-
         </div>
 
-        <!-- Right Column: Goal Builder -->
-        <div class="lg:col-span-1 space-y-8">
+        <!-- TAB 3: DIGITAL TASBIH & DHIKR -->
+        <div id="view-tasbih" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tasbih Counter Machine -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 text-center space-y-6 shadow-xl">
+                    <h3 class="text-amber-400 font-bold text-base">تەسبیحی ئەلیکترۆنی (ژمێرەری زیکر)</h3>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4 shadow-xl">
-                <h3 class="font-bold text-amber-400 text-sm border-b border-slate-800 pb-3">
-                    تۆمارکردنی خەون و ئامانجێکی نوێ
-                </h3>
+                    <!-- Active Dhikr Type -->
+                    <select id="dhikrSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-amber-300 font-bold focus:outline-none">
+                        <option value="أستغفر الله وأتوب إليه">أستغفر الله وأتوب إليه (کلیلی ڕزق)</option>
+                        <option value="اللهم صلِّ وسلم على نبينا محمد">اللهم صلِّ وسلم على نبينا محمد (نەهێشتنی خەم)</option>
+                        <option value="لا حول ولا قوة إلا بالله">لا حول ولا قوة إلا بالله (گەنجینەی بەهەشت)</option>
+                        <option value="سبحان الله وبحمده سبحان الله العظيم">سبحان الله وبحمده (قورسی تەرازوو)</option>
+                    </select>
 
-                <form id="goalForm" onsubmit="addGoal(event)" class="space-y-3">
-                    <div>
-                        <label class="text-xs text-slate-400 block mb-1">ناونیشانی خەونەکەت</label>
-                        <input type="text" id="goalTitle" required placeholder="بۆ نموونە: فێربوونی پیشەیەکی نوێ" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
+                    <div class="relative w-44 h-44 mx-auto bg-slate-950 rounded-full border-4 border-amber-500/30 flex flex-col items-center justify-center shadow-inner gold-glow">
+                        <span id="tasbihDisplay" class="text-4xl font-extrabold font-mono text-amber-400">0</span>
+                        <span class="text-[10px] text-slate-500 mt-1">ئامانج: ١٠٠ جار</span>
                     </div>
 
-                    <div>
-                        <label class="text-xs text-slate-400 block mb-1">نیەتەکەت چییە؟ (النيّة)</label>
-                        <input type="text" id="goalNiyyah" required placeholder="بۆ نموونە: بەدەستهێنانی ڕزقی حەڵاڵ" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
+                    <div class="flex gap-3 justify-center">
+                        <button onclick="countTasbih()" class="flex-1 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl text-base shadow-lg transition active:scale-95">
+                            +1 (زیکر بکە)
+                        </button>
+                        <button onclick="resetTasbih()" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-2xl text-xs">
+                            سفرکردنەوە
+                        </button>
                     </div>
+                </div>
 
-                    <div>
-                        <label class="text-xs text-slate-400 block mb-1">هەنگاوی کرداری (الأخذ بالأسباب)</label>
-                        <input type="text" id="goalAction" required placeholder="بۆ نموونە: ڕۆژانە ١ کاتژمێر کارکردن" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
+                <!-- Daily Routine Checklist -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
+                    <h3 class="text-emerald-400 font-bold text-base border-b border-slate-800 pb-3">تۆمارکەری عیبادەت و بەرەکەتی ڕۆژانە</h3>
+                    <div id="routineList" class="space-y-3 text-xs text-slate-300">
+                        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 cursor-pointer">
+                            <input type="checkbox" onchange="toggleRoutine(0)" id="rt-0" class="w-4 h-4 accent-emerald-500 rounded">
+                            <span>خوێندنی نوێژەکان لە کاتی خۆیاندا</span>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 cursor-pointer">
+                            <input type="checkbox" onchange="toggleRoutine(1)" id="rt-1" class="w-4 h-4 accent-emerald-500 rounded">
+                            <span>١٠٠ جار الاستغفار لەگەڵ دوعای بەیانیان</span>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 cursor-pointer">
+                            <input type="checkbox" onchange="toggleRoutine(2)" id="rt-2" class="w-4 h-4 accent-emerald-500 rounded">
+                            <span>ئەنجامدانی کارێکی کرداریی بۆ خەونەکانت</span>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 cursor-pointer">
+                            <input type="checkbox" onchange="toggleRoutine(3)" id="rt-3" class="w-4 h-4 accent-emerald-500 rounded">
+                            <span>بەخشینی سەدەقەیەک (تەنانەت بە زەردەخەنەیەک)</span>
+                        </label>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition shadow-lg shadow-amber-950/20">
-                        تۆمارکردن لە لیستی خەونەکانم
+        <!-- TAB 4: BARAKAH FOCUS TIMER -->
+        <div id="view-focus" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-md mx-auto text-center space-y-6 shadow-xl">
+                <div>
+                    <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-3 py-1 rounded-full font-bold">تایمەری کارکردن بە بەرەکەت</span>
+                    <h3 class="text-lg font-bold text-slate-200 mt-2">Focus Pomodoro (٢٥ خولەک)</h3>
+                    <p class="text-xs text-slate-400 mt-1">تەنها کاربکە بەبێ ئەوەی مۆبایلەکەت سەرقاڵت بکات، لەگەڵ نیەتی بەدەستهێنانی ڕەزامەندی خودا.</p>
+                </div>
+
+                <div class="text-5xl font-mono font-extrabold text-amber-400 bg-slate-950 py-6 rounded-2xl border border-slate-800" id="timerDisplay">
+                    25:00
+                </div>
+
+                <div class="flex gap-3 justify-center">
+                    <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition">
+                        دەستپێکردن
                     </button>
-                </form>
-            </div>
-
-            <!-- List of User Dreams -->
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h3 class="font-bold text-slate-200 text-sm">لیستی خەونەکانم</h3>
-                    <span id="goalCount" class="text-xs bg-slate-800 text-amber-400 px-2 py-0.5 rounded-full font-bold">1</span>
-                </div>
-
-                <div id="goalsList" class="space-y-3">
+                    <button onclick="resetTimer()" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-xl text-xs">
+                        ڕێکخستنەوە
+                    </button>
                 </div>
             </div>
+        </div>
 
+        <!-- TAB 5: DUA & QURAN LIBRARY -->
+        <div id="view-library" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
+                <h3 class="text-amber-400 font-bold text-base border-b border-slate-800 pb-3">کتێبخانەی دوعا و ئایەتەکان بەپێی ئامانجەکان</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-bold">دوعای فراوانی ڕزق</span>
+                        <p class="quran-font text-amber-300 text-sm">"اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ"</p>
+                        <p class="text-[11px] text-slate-400">داواکردنی ڕزقی پاک و بێپێویستبوون لە خەڵکی.</p>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-bold">دوعای سەرکەوتن و ئاسانکاری</span>
+                        <p class="quran-font text-amber-300 text-sm">"رَبِّ اشْرَحْ لِي صَدْرِي ۝ وَيَسِّرْ لِي أَمْرِي ۝ وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي"</p>
+                        <p class="text-[11px] text-slate-400">بۆ ئاسانبوونی ئەرکە قورسەکان و کردنەوەی گرێکان.</p>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded font-bold">دوعای بەدەستهێنانی زانست</span>
+                        <p class="quran-font text-amber-300 text-sm">"رَّبِّ زِدْنِي عِلْمًا"</p>
+                        <p class="text-[11px] text-slate-400">بۆ فێربوون و زیادبوونی زانیاری سودبەخش.</p>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded font-bold">دوعای نەمانی خەم و دودڵی</span>
+                        <p class="quran-font text-amber-300 text-sm">"لا إِلَهَ إِلا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ"</p>
+                        <p class="text-[11px] text-slate-400">دوعای حەزرەتی یونس بۆ ڕزگاربوون لە تەنگانە.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
@@ -143,33 +295,73 @@
     <script>
         const apiKey = "";
 
-        let goals = [
+        // Application State Saved in LocalStorage
+        let goals = JSON.parse(localStorage.getItem('minara_goals')) || [
             {
                 id: 1,
-                title: "دروستکردنی ڕزقێکی حەڵاڵ و سەربەخۆ",
+                title: "دروستکردنی سۆرسێکی ڕزقی حەڵاڵ",
                 niyyah: "خزمەتکردنی خێزان و بەخشینی سەدەقە",
-                action: "فێربوونی پیشەیەکی نوێ و کارکردنی بەردەوام",
-                progress: 30
+                action: "فێربوونی پیشەیەکی نوێ",
+                steps: [
+                    { title: "دیاریکردنی جۆری پیشەکە", done: true },
+                    { title: "دەستپێکردنی خولی فێربوون", done: false },
+                    { title: "ئەنجامدانی یەکەم پڕۆژە", done: false }
+                ]
             }
         ];
 
+        let tasbihCount = parseInt(localStorage.getItem('minara_tasbih')) || 0;
+        let routines = JSON.parse(localStorage.getItem('minara_routines')) || [false, false, false, false];
+
+        // Tab Switching
+        function switchTab(tabId) {
+            const tabs = ['dashboard', 'ai-coach', 'tasbih', 'focus', 'library'];
+            tabs.forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) {
+                    btn.className = "px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-slate-800 text-slate-300 hover:text-white";
+                }
+            });
+
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = "px-4 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap bg-amber-500 text-slate-950";
+            }
+        }
+
+        // Render Goals
         function renderGoals() {
             const container = document.getElementById('goalsList');
             document.getElementById('goalCount').innerText = goals.length;
+            localStorage.setItem('minara_goals', JSON.stringify(goals));
 
             if (goals.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">هیچ خەونێک تۆمار نەکراوە.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">هیچ خەونێک دیاری نەکراوە.</p>`;
                 return;
             }
 
             container.innerHTML = goals.map(g => `
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
                     <div class="flex justify-between items-start">
-                        <h4 class="font-bold text-amber-400 text-sm">${g.title}</h4>
+                        <div>
+                            <h4 class="font-bold text-amber-400 text-sm">${g.title}</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5"><strong class="text-slate-300">النيّة:</strong> ${g.niyyah}</p>
+                        </div>
                         <button onclick="deleteGoal(${g.id})" class="text-slate-600 hover:text-red-400 text-xs">سڕینەوە</button>
                     </div>
-                    <p class="text-xs text-slate-400"><strong class="text-slate-300">النيّة:</strong> ${g.niyyah}</p>
-                    <p class="text-xs text-slate-400"><strong class="text-slate-300">کۆشش:</strong> ${g.action}</p>
+
+                    <!-- Steps Checklist -->
+                    <div class="space-y-1.5 pt-2 border-t border-slate-900">
+                        <span class="text-[10px] text-slate-500 block">هەنگاوەکانی کارکردن:</span>
+                        ${g.steps.map((st, idx) => `
+                            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                                <input type="checkbox" ${st.done ? 'checked' : ''} onchange="toggleStep(${g.id}, ${idx})" class="w-3.5 h-3.5 accent-emerald-500 rounded">
+                                <span class="${st.done ? 'line-through text-slate-500' : ''}">${st.title}</span>
+                            </label>
+                        `).join('')}
+                    </div>
                 </div>
             `).join('');
         }
@@ -180,14 +372,103 @@
             const niyyah = document.getElementById('goalNiyyah').value;
             const action = document.getElementById('goalAction').value;
 
-            goals.unshift({ id: Date.now(), title, niyyah, action, progress: 10 });
+            const newGoal = {
+                id: Date.now(),
+                title,
+                niyyah,
+                action,
+                steps: [
+                    { title: action, done: false },
+                    { title: "بەردەوامی لە دوعا و الاستغفار", done: false }
+                ]
+            };
+
+            goals.unshift(newGoal);
             renderGoals();
             document.getElementById('goalForm').reset();
+        }
+
+        function toggleStep(goalId, stepIdx) {
+            const goal = goals.find(g => g.id === goalId);
+            if (goal) {
+                goal.steps[stepIdx].done = !goal.steps[stepIdx].done;
+                renderGoals();
+            }
         }
 
         function deleteGoal(id) {
             goals = goals.filter(g => g.id !== id);
             renderGoals();
+        }
+
+        // Tasbih Logic
+        function countTasbih() {
+            tasbihCount++;
+            document.getElementById('tasbihDisplay').innerText = tasbihCount;
+            localStorage.setItem('minara_tasbih', tasbihCount);
+        }
+
+        function resetTasbih() {
+            tasbihCount = 0;
+            document.getElementById('tasbihDisplay').innerText = 0;
+            localStorage.setItem('minara_tasbih', 0);
+        }
+
+        // Routine Logic
+        function toggleRoutine(idx) {
+            routines[idx] = !routines[idx];
+            localStorage.setItem('minara_routines', JSON.stringify(routines));
+        }
+
+        function initRoutines() {
+            routines.forEach((val, idx) => {
+                const el = document.getElementById(`rt-${idx}`);
+                if (el) el.checked = val;
+            });
+        }
+
+        // Focus Timer Logic
+        let timerSeconds = 1500;
+        let timerInterval = null;
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+            const s = (timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('startTimerBtn');
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                btn.innerText = "بەردەوامبوون";
+            } else {
+                btn.innerText = "وەستان";
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        alert("ماوەی کارکردنی تەواو بە بەرەکەت بەکۆتا هات!");
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+            timerSeconds = 1500;
+            updateTimerDisplay();
+            document.getElementById('startTimerBtn').innerText = "دەستپێکردن";
+        }
+
+        // AI Advice Functions
+        function setPrompt(text) {
+            document.getElementById('dreamInput').value = text;
         }
 
         async function fetchGeminiWithRetry(url, payload, retries = 5) {
@@ -215,18 +496,18 @@
             if (!promptInput) return;
 
             responseBox.classList.remove('hidden');
-            responseBox.innerHTML = '<div class="text-center text-amber-400 py-4 animate-pulse">ژیری دەستکرد خەریکی ئامادەکردنی ڕێنماییەکانە...</div>';
+            responseBox.innerHTML = '<div class="text-center text-amber-400 py-4 animate-pulse">ژیری دەستکرد خەریکی ئامادەکردنی شیکاری ئایەت و هەنگاوەکانە...</div>';
             btn.disabled = true;
 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const payload = {
-                contents: [{ parts: [{ text: `خەونەکەم بەم شێوەیەیە: "${promptInput}". ڕێنماییم بکە بەپێی ئیسلام بە کوردی.` }] }]
+                contents: [{ parts: [{ text: `خەونەکەم: "${promptInput}". تکایە ڕێنماییم بکە بە گوێرەی ئیسلام و خاڵبەندی بە کوردی.` }] }]
             };
 
             try {
                 const data = await fetchGeminiWithRetry(url, payload);
                 const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                responseBox.innerHTML = text ? text.replace(/\n/g, '<br>') : 'پەیامەکە وەرنگیرایەوە.';
+                responseBox.innerHTML = text ? text.replace(/\n/g, '<br>') : 'پەیام وەرنگیرایەوە.';
             } catch (err) {
                 responseBox.innerHTML = 'تکایە دووبارە هەوڵبدەرەوە.';
             } finally {
@@ -234,7 +515,10 @@
             }
         }
 
+        // Initialize
+        document.getElementById('tasbihDisplay').innerText = tasbihCount;
         renderGoals();
+        initRoutines();
     </script>
 </body>
 </html>
