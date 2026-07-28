@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ئەپی پێشکەوتووی فێربوونی پیانۆ - Master Piano Pro</title>
+    <title>Master Piano Academy & Studio</title>
+    <!-- Tone.js library for professional high-quality piano sound -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <style>
         :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --accent-color: #38bdf8;
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #38bdf8;
             --accent-hover: #0ea5e9;
-            --text-main: #f8fafc;
+            --text-light: #f8fafc;
             --text-muted: #94a3b8;
             --white-key: #ffffff;
-            --white-key-active: #e2e8f0;
+            --white-key-active: #cbd5e1;
             --black-key: #0f172a;
             --black-key-active: #334155;
             --highlight: #f43f5e;
@@ -24,13 +26,13 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             touch-action: manipulation;
         }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -42,13 +44,13 @@
             border-bottom: 1px solid #334155;
             padding: 15px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-            margin-bottom: 5px;
+            font-size: 1.6rem;
+            color: var(--accent);
+            margin-bottom: 4px;
         }
 
         header p {
@@ -59,26 +61,27 @@
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            background: var(--bg-secondary);
+            gap: 6px;
+            padding: 10px;
+            background: var(--bg-card);
             flex-wrap: wrap;
+            border-bottom: 1px solid #334155;
         }
 
         .tab-btn {
             background: #334155;
-            color: var(--text-main);
+            color: var(--text-light);
             border: none;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .tab-btn.active, .tab-btn:hover {
-            background: var(--accent-color);
-            color: var(--bg-primary);
+            background: var(--accent);
+            color: var(--bg-main);
             font-weight: bold;
         }
 
@@ -88,28 +91,28 @@
             flex-direction: column;
             align-items: center;
             padding: 15px;
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             width: 100%;
         }
 
-        .section-content {
+        .section-view {
             display: none;
             width: 100%;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease;
         }
 
-        .section-content.active {
+        .section-view.active {
             display: block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .card {
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
@@ -118,37 +121,67 @@
         }
 
         .card h2 {
-            font-size: 1.2rem;
-            color: var(--accent-color);
+            font-size: 1.15rem;
+            color: var(--accent);
             margin-bottom: 12px;
             border-bottom: 1px solid #334155;
             padding-bottom: 6px;
         }
 
-        /* Piano Styles */
-        .piano-wrapper {
+        /* Audio Engine Starter Overlay */
+        #audioOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #audioOverlay h2 { color: var(--accent); margin-bottom: 10px; font-size: 1.8rem; }
+        #audioOverlay p { color: var(--text-muted); margin-bottom: 20px; font-size: 1rem; }
+
+        .btn-start {
+            background: var(--accent);
+            color: var(--bg-main);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            transition: transform 0.2s;
+        }
+        .btn-start:hover { transform: scale(1.05); }
+
+        /* Piano UI Styling */
+        .piano-outer {
             display: flex;
             flex-direction: column;
             align-items: center;
             background: #090d16;
-            padding: 25px 15px;
-            border-radius: 16px;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
+            padding: 25px 10px;
+            border-radius: 14px;
+            box-shadow: inset 0 4px 12px rgba(0,0,0,0.7);
             width: 100%;
             overflow-x: auto;
-            margin-top: 10px;
         }
 
         .piano-board {
             display: flex;
             position: relative;
-            height: 220px;
+            height: 210px;
         }
 
         .key {
             position: relative;
-            width: 48px;
-            height: 220px;
+            width: 46px;
+            height: 210px;
             background: var(--white-key);
             border: 1px solid #cbd5e1;
             border-radius: 0 0 6px 6px;
@@ -157,17 +190,17 @@
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             color: #475569;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             user-select: none;
-            box-shadow: inset 0 -8px 6px rgba(0,0,0,0.1), 0 4px 4px rgba(0,0,0,0.2);
+            box-shadow: inset 0 -6px 4px rgba(0,0,0,0.1), 0 3px 3px rgba(0,0,0,0.2);
             transition: background 0.05s, transform 0.05s;
         }
 
-        .key span {
-            font-size: 0.65rem;
+        .key small {
+            font-size: 0.6rem;
             color: #94a3b8;
             margin-top: 2px;
         }
@@ -175,7 +208,7 @@
         .key.active, .key:active {
             background: var(--white-key-active);
             transform: translateY(2px);
-            box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
+            box-shadow: inset 0 -2px 2px rgba(0,0,0,0.2);
         }
 
         .key.highlight {
@@ -185,8 +218,8 @@
 
         .black-key {
             position: absolute;
-            width: 30px;
-            height: 130px;
+            width: 28px;
+            height: 125px;
             background: var(--black-key);
             border-radius: 0 0 4px 4px;
             z-index: 3;
@@ -197,14 +230,14 @@
             align-items: center;
             padding-bottom: 8px;
             color: #cbd5e1;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             user-select: none;
-            box-shadow: inset 0 -4px 4px rgba(255,255,255,0.1), 0 4px 6px rgba(0,0,0,0.4);
+            box-shadow: inset 0 -3px 3px rgba(255,255,255,0.1), 0 3px 5px rgba(0,0,0,0.4);
             transition: background 0.05s;
         }
 
-        .black-key span {
-            font-size: 0.55rem;
+        .black-key small {
+            font-size: 0.5rem;
             color: #64748b;
         }
 
@@ -217,8 +250,8 @@
             color: #ffffff;
         }
 
-        /* Controls Panel */
-        .piano-controls {
+        /* Control Panel */
+        .toolbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -228,7 +261,7 @@
             gap: 10px;
         }
 
-        .control-group {
+        .tool-group {
             display: flex;
             gap: 8px;
             align-items: center;
@@ -238,33 +271,32 @@
             background: #334155;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 7px 12px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             transition: 0.2s;
         }
 
         .btn:hover { background: #475569; }
-        .btn-primary { background: var(--accent-color); color: var(--bg-primary); }
-        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-accent { background: var(--accent); color: var(--bg-main); }
+        .btn-accent:hover { background: var(--accent-hover); }
         .btn-danger { background: var(--highlight); }
 
-        /* Recorder status */
-        .status-badge {
+        .badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
             background: #334155;
             color: var(--text-muted);
         }
-        .status-badge.recording {
+        .badge.active-rec {
             background: var(--highlight);
             color: white;
-            animation: pulse 1.5s infinite;
+            animation: pulse 1.2s infinite;
         }
 
         @keyframes pulse {
@@ -273,344 +305,343 @@
             100% { opacity: 1; }
         }
 
-        /* Theory & Lessons content */
-        .theory-grid {
+        /* Lessons & Theory Layout */
+        .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
         }
 
-        .theory-item {
-            background: rgba(255,255,255,0.03);
-            padding: 15px;
+        .info-box {
+            background: rgba(255,255,255,0.02);
+            padding: 12px;
             border-radius: 8px;
-            border-left: 3px solid var(--accent-color);
+            border-left: 3px solid var(--accent);
         }
 
-        .theory-item h3 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
+        .info-box h3 { font-size: 0.95rem; margin-bottom: 6px; color: var(--text-light); }
+        .info-box p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 
-        .theory-item p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Song list */
-        .song-card {
-            background: rgba(255,255,255,0.03);
+        .song-row {
+            background: rgba(255,255,255,0.02);
             border: 1px solid #334155;
-            padding: 12px 15px;
+            padding: 10px 14px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .song-info h4 { font-size: 0.95rem; color: var(--accent-color); margin-bottom: 3px; }
-        .song-info p { font-size: 0.75rem; color: var(--text-muted); }
+        .song-meta h4 { font-size: 0.9rem; color: var(--accent); margin-bottom: 2px; }
+        .song-meta p { font-size: 0.72rem; color: var(--text-muted); }
 
-        /* Footer info */
-        footer {
+        /* Quiz Box */
+        .quiz-container {
             text-align: center;
             padding: 15px;
-            font-size: 0.75rem;
+        }
+        .quiz-question {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        .quiz-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .quiz-btn {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .quiz-btn:hover { background: var(--accent); color: var(--bg-main); }
+
+        footer {
+            text-align: center;
+            padding: 12px;
+            font-size: 0.72rem;
             color: var(--text-muted);
             border-top: 1px solid #334155;
-            background: var(--bg-secondary);
+            background: var(--bg-card);
         }
     </style>
 </head>
 <body>
 
+    <!-- Audio Permission Overlay -->
+    <div id="audioOverlay">
+        <h2>🎹 Welcome to Master Piano Studio</h2>
+        <p>Click below to initialize the professional audio engine and start playing.</p>
+        <button class="btn-start" onclick="initAudioApp()">Launch App</button>
+    </div>
+
     <header>
-        <h1>🎹 Master Piano Pro</h1>
-        <p>ئەپی پێشکەوتووی فێربوونی پیانۆ، ژەنین و تیۆری مۆسیقا</p>
+        <h1>🎹 Master Piano Studio Pro</h1>
+        <p>Interactive Piano Learning, Composition & Music Theory</p>
     </header>
 
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('play')">ژەنینی ڕاستەقینە</button>
-        <button class="tab-btn" onclick="switchTab('lessons')">وانەکانی فێربوون</button>
-        <button class="tab-btn" onclick="switchTab('theory')">تیۆری مۆسیقا</button>
-        <button class="tab-btn" onclick="switchTab('settings')">ڕێکخستنەکان</button>
+        <button class="tab-btn active" onclick="switchView('studio', this)">Piano Studio</button>
+        <button class="tab-btn" onclick="switchView('lessons', this)">Song Lessons</button>
+        <button class="tab-btn" onclick="switchView('theory', this)">Music Theory</button>
+        <button class="tab-btn" onclick="switchView('quiz', this)">Note Quiz</button>
     </div>
 
     <main>
-        <!-- بەشی یەکەم: ژەنین و تۆمارکردن -->
-        <div id="play" class="section-content active">
+        <!-- STUDIO VIEW -->
+        <div id="studio" class="section-view active">
             <div class="card">
-                <div class="piano-controls">
-                    <div class="control-group">
-                        <button class="btn btn-primary" id="recBtn" onclick="toggleRecord()">تۆمارکردن ⏺</button>
-                        <button class="btn" id="playRecBtn" onclick="playRecording()" disabled>لێدانەوە ▶</button>
-                        <span id="recStatus" class="status-badge">ئامادە</span>
+                <div class="toolbar">
+                    <div class="tool-group">
+                        <button class="btn btn-accent" id="recToggle" onclick="toggleRecording()">Record ⏺</button>
+                        <button class="btn" id="playRec" onclick="playbackRecording()" disabled>Play ▶</button>
+                        <span id="recStatus" class="badge">Ready</span>
                     </div>
-                    <div class="control-group">
-                        <button class="btn" onclick="changeOctave(-1)">◀ ئۆکتاڤی نزم</button>
-                        <span id="octaveDisplay" style="font-size: 0.85rem; font-weight: bold;">ئۆکتاڤ: 4</span>
-                        <button class="btn" onclick="changeOctave(1)">ئۆکتاڤی بەرز ▶</button>
+                    <div class="tool-group">
+                        <button class="btn" onclick="shiftOctave(-1)">◄ Octave Down</button>
+                        <span id="octaveLabel" style="font-size: 0.82rem; font-weight: bold;">Octave: 4</span>
+                        <button class="btn" onclick="shiftOctave(1)">Octave Up ►</button>
                     </div>
                 </div>
 
-                <div class="piano-wrapper">
-                    <div class="piano-board" id="pianoBoard">
-                        <!-- کیبۆردەکە بە جاواسکریپت بە شێوەیەکی داینامیک دروست دەکرێت -->
+                <div class="piano-outer">
+                    <div class="piano-board" id="keyboardContainer">
+                        <!-- Dynamic keys rendered here -->
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <h2>ڕێنمایی بەکارهێنانی خێرا</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-                    دەتوانیت پەنجە بنێیت بە دوگمەکانی سەر شاشەدا یان ڕاستەوخۆ کیبۆردی کۆمپیوتەرەکەت بەکاربهێنیت (پیتەکانی A تا K بۆ دوگمە سپییەکان و W, E, T, Y, U بۆ دوگمە ڕەشەکان). سیستمی دەنگی پێشکەوتووی Web Audio API بەکارهاتووە بۆ دەرچوونی دەنگی پاک و سروشتی.
+                <h2>Quick Guide & Controls</h2>
+                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+                    Tap the onscreen keys or use your computer keyboard: <strong>A to K</strong> for white keys, and <strong>W, E, T, Y, U</strong> for black accidentals. Powered by Tone.js synthetic acoustics for rich, zero-latency sound.
                 </p>
             </div>
         </div>
 
-        <!-- بەشی دووەم: وانەکان و فێربوونی گۆرانی -->
-        <div id="lessons" class="section-content">
+        <!-- LESSONS VIEW -->
+        <div id="lessons" class="section-view">
             <div class="card">
-                <h2>گۆرانییە فێرکارییەکان</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">یەکێک لەم ئاوازانە هەڵبژێرە بۆ ئەوەی ڕێنماییت بکات چۆن بیانژەنی:</p>
+                <h2>Guided Practice Songs</h2>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Select a melody to watch the keys light up and learn how to play it:</p>
                 
-                <div class="song-card">
-                    <div class="song-info">
-                        <h4>ئۆدە بۆ خۆشی (Ode to Joy)</h4>
-                        <p>ئاستی: سەرەتایی | بتهۆڤن</p>
+                <div class="song-row">
+                    <div class="song-meta">
+                        <h4>Ode to Joy (Beethoven)</h4>
+                        <p>Difficulty: Beginner | Classic Masterpiece</p>
                     </div>
-                    <button class="btn btn-primary" onclick="loadSong('ode')">فێربوون</button>
+                    <button class="btn btn-accent" onclick="playLesson('ode')">Start Lesson</button>
                 </div>
 
-                <div class="song-card">
-                    <div class="song-info">
-                        <h4>سەرەتای ئەستێرەی بچووک (Twinkle Twinkle)</h4>
-                        <p>ئاستی: زۆر ئاسان بۆ منداڵان</p>
+                <div class="song-row">
+                    <div class="song-meta">
+                        <h4>Twinkle Twinkle Little Star</h4>
+                        <p>Difficulty: Very Easy | Great for Kids</p>
                     </div>
-                    <button class="btn btn-primary" onclick="loadSong('twinkle')">فێربوون</button>
+                    <button class="btn btn-accent" onclick="playLesson('twinkle')">Start Lesson</button>
                 </div>
 
-                <div id="songPlayerArea" style="margin-top: 15px; display: none; background: #0f172a; padding: 15px; border-radius: 8px;">
-                    <h3 id="currentSongTitle" style="color: var(--accent-color); font-size: 1rem; margin-bottom: 8px;"></h3>
-                    <p id="songInstruction" style="font-size: 0.85rem; margin-bottom: 10px;"></p>
-                    <button class="btn btn-danger" onclick="stopSong()">وەستاندن</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- بەشی سێیەم: تیۆری مۆسیقا و زانیاری ورد -->
-        <div id="theory" class="section-content">
-            <div class="card">
-                <h2>بنەماکانی پێشکەوتووی پیانۆ و نۆتەناسی</h2>
-                <div class="theory-grid">
-                    <div class="theory-item">
-                        <h3>١. سیستمی نۆتەکان (Solfège)</h3>
-                        <p>حەوت نۆتەی سەرەکی پێکدێن لە (Do, Re, Mi, Fa, Sol, La, Si) کە بەرامبەر پیتە ئینگلیزییەکانن (C, D, E, F, G, A, B).</p>
-                    </div>
-                    <div class="theory-item">
-                        <h3>٢. پەنجەدانانی دروست (Fingering)</h3>
-                        <p>بەکارهێنانی پەنجەی گەورە وەک (1) تا پەنجەی بچووک وەک (5) زامنکەری خێرایی و ڕێگریکردنە لە شەکەتبوونی ماسولکەکانی دەست.</p>
-                    </div>
-                    <div class="theory-item">
-                        <h3>٣. کۆردەکان (Chords)</h3>
-                        <p>تێکەڵکردنی سێ نۆتە یان زیاتر بەیەکەوە (بۆ نموونە C, E, G) دەنگێکی هارمۆنی و بەهێز دروست دەکات کە بناغەی مۆسیقایە.</p>
-                    </div>
-                    <div class="theory-item">
-                        <h3>٤. لەرەلەر و ئۆکتاڤ (Frequency)</h3>
-                        <p>هەرچی ئۆکتاڤ بەرزتر بێت، لەرەلەری شەپۆلی دەنگەکە خێرا‌تر و دەنگەکەش باری ناسکتر و زوڕناویی تر دەبێت.</p>
-                    </div>
+                <div id="lessonPlayerBox" style="margin-top: 12px; display: none; background: #0f172a; padding: 12px; border-radius: 8px; text-align: center;">
+                    <h3 id="lessonTitle" style="color: var(--accent); font-size: 0.95rem; margin-bottom: 4px;"></h3>
+                    <p id="lessonStatus" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;"></p>
+                    <button class="btn btn-danger" onclick="stopLesson()">Stop Lesson</button>
                 </div>
             </div>
         </div>
 
-        <!-- بەشی چوارەم: ڕێکخستنەکان -->
-        <div id="settings" class="section-content">
+        <!-- THEORY VIEW -->
+        <div id="theory" class="section-view">
             <div class="card">
-                <h2>ڕێکخستنەکانی ئەپ</h2>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>پیشاندانی پیتەکان لەسەر دوگمەکان</span>
-                    <input type="checkbox" id="showLabels" checked onchange="toggleLabels()" style="width: 18px; height: 18px; cursor: pointer;">
+                <h2>Essential Piano & Music Theory</h2>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h3>1. The Musical Alphabet</h3>
+                        <p>Western music uses 7 basic note names: A, B, C, D, E, F, G. On a piano, these correspond to the white keys, repeating in cycles called octaves.</p>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>جۆری دەنگی ئۆسیلەیتەر (Waveform)</span>
-                        <select id="waveType" onchange="changeWaveType()" style="background: #334155; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer;">
-                            <option value="triangle">سێگۆشە (نەرم و هاوشێوەی پیانۆ)</option>
-                            <option value="sine">ساینی (پاق و خاوێن)</option>
-                            <option value="sawtooth">سۆتوس (تیژ و ڕۆک)</option>
-                            <option value="square">چوارگۆشە (ئیکترۆنی کۆن)</option>
-                        </select>
+                    <div class="info-box">
+                        <h3>2. Correct Fingering</h3>
+                        <p>Proper finger placement (numbered 1 for thumb to 5 for pinky) ensures fluid motion, high speed, and prevents wrist strain during complex passages.</p>
                     </div>
+                    <div class="info-box">
+                        <h3>3. Chords & Harmony</h3>
+                        <p>Playing three or more notes simultaneously (a triad, e.g., C-E-G) forms a chord, creating rich harmonic backing for melodies.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>4. Octaves & Frequency</h3>
+                        <p>Moving an octave higher doubles the frequency (Hz) of the sound wave, producing a higher pitch while retaining the exact same musical character.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIZ VIEW -->
+        <div id="quiz" class="section-view">
+            <div class="card">
+                <h2>Note Identification Trainer</h2>
+                <div class="quiz-container">
+                    <p class="quiz-question" id="quizPrompt">Click "Start Quiz" to test your knowledge of piano keys!</p>
+                    <div id="quizArea" style="margin-bottom: 15px;">
+                        <button class="quiz-btn" onclick="startQuiz()">Start Quiz</button>
+                    </div>
+                    <p id="quizFeedback" style="font-size: 0.85rem; font-weight: bold; color: var(--success);"></p>
                 </div>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>Master Piano Pro App &copy; 2026 - هەموو مافێک پارێزراوە بۆ گەشەپێدانی زیرەک</p>
+        <p>Master Piano Studio Pro &copy; 2026 - Designed for Universal Learning</p>
     </footer>
 
     <script>
-        // سیستمی گۆڕینی تابەکان
-        function switchTab(tabId) {
-            document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+        let synth;
+        let currentOctave = 4;
+        let isRecording = false;
+        let recordedNotes = [];
+        let recordStartTime = 0;
+        let activeLessonInterval = null;
+
+        // Initialize Tone.js synth on user interaction
+        function initAudioApp() {
+            document.getElementById('audioOverlay').style.display = 'none';
+            // Polyphonic Synth tailored for piano-like envelope using Tone.js
+            synth = new Tone.Synth({
+                oscillator: { type: "triangle" },
+                envelope: {
+                    attack: 0.02,
+                    decay: 0.1,
+                    sustain: 0.3,
+                    release: 1.2
+                }
+            }).toDestination();
         }
 
-        // زانیاری نۆتەکان و لەرەلەرەکانیان (Octave 4 بنەڕەتی)
-        let currentOctave = 4;
-        let currentWave = 'triangle';
-        let showKeyLabels = true;
+        // Switch navigation tabs
+        function switchView(viewId, btnElement) {
+            document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            btnElement.classList.add('active');
+            stopLesson();
+        }
 
-        const baseNotes = [
-            { note: 'C', type: 'white', keyMap: 'a', freqMultiplier: 1 },
-            { note: 'C#', type: 'black', keyMap: 'w', freqMultiplier: 1.05946 },
-            { note: 'D', type: 'white', keyMap: 's', freqMultiplier: 1.12246 },
-            { note: 'D#', type: 'black', keyMap: 'e', freqMultiplier: 1.18921 },
-            { note: 'E', type: 'white', keyMap: 'd', freqMultiplier: 1.25992 },
-            { note: 'F', type: 'white', keyMap: 'f', freqMultiplier: 1.33484 },
-            { note: 'F#', type: 'black', keyMap: 't', freqMultiplier: 1.41421 },
-            { note: 'G', type: 'white', keyMap: 'g', freqMultiplier: 1.49831 },
-            { note: 'G#', type: 'black', keyMap: 'y', freqMultiplier: 1.58740 },
-            { note: 'A', type: 'white', keyMap: 'h', freqMultiplier: 1.68179 },
-            { note: 'A#', type: 'black', keyMap: 'u', freqMultiplier: 1.78180 },
-            { note: 'B', type: 'white', keyMap: 'j', freqMultiplier: 1.88775 },
-            { note: 'C5', type: 'white', keyMap: 'k', freqMultiplier: 2.0 }
+        // Piano Key Configurations
+        const pianoKeys = [
+            { note: 'C', type: 'white', keyMap: 'a', semitone: 0 },
+            { note: 'C#', type: 'black', keyMap: 'w', semitone: 1 },
+            { note: 'D', type: 'white', keyMap: 's', semitone: 2 },
+            { note: 'D#', type: 'black', keyMap: 'e', semitone: 3 },
+            { note: 'E', type: 'white', keyMap: 'd', semitone: 4 },
+            { note: 'F', type: 'white', keyMap: 'f', semitone: 5 },
+            { note: 'F#', type: 'black', keyMap: 't', semitone: 6 },
+            { note: 'G', type: 'white', keyMap: 'g', semitone: 7 },
+            { note: 'G#', type: 'black', keyMap: 'y', semitone: 8 },
+            { note: 'A', type: 'white', keyMap: 'h', semitone: 9 },
+            { note: 'A#', type: 'black', keyMap: 'u', semitone: 10 },
+            { note: 'B', type: 'white', keyMap: 'j', semitone: 11 },
+            { note: 'C5', type: 'white', keyMap: 'k', semitone: 12 }
         ];
 
-        // بنەمای فرێکوێنسی C4 = 261.63 Hz
-        const baseC4Freq = 261.63;
+        function buildKeyboard() {
+            const container = document.getElementById('keyboardContainer');
+            container.innerHTML = '';
+            let whiteKeyOffset = 46;
 
-        function buildPiano() {
-            const board = document.getElementById('pianoBoard');
-            board.innerHTML = '';
-            
-            let blackKeyLeftOffset = 34; 
-
-            baseNotes.forEach((item, index) => {
-                const freq = baseC4Freq * item.freqMultiplier * Math.pow(2, currentOctave - 4);
+            pianoKeys.forEach((item) => {
+                const noteName = item.note.includes('5') ? `C${currentOctave + 1}` : `${item.note}${currentOctave}`;
                 
                 if (item.type === 'white') {
-                    const keyDiv = document.createElement('div');
-                    keyDiv.className = 'key';
-                    keyDiv.setAttribute('data-freq', freq);
-                    keyDiv.setAttribute('data-note', item.note);
-                    keyDiv.innerHTML = `${showKeyLabels ? item.note : ''}<span>${showKeyLabels ? item.keyMap.toUpperCase() : ''}</span>`;
+                    const keyEl = document.createElement('div');
+                    keyEl.className = 'key';
+                    keyEl.setAttribute('data-note', item.note);
+                    keyEl.setAttribute('data-fullname', noteName);
+                    keyEl.innerHTML = `${item.note}<small>${item.keyMap.toUpperCase()}</small>`;
                     
-                    keyDiv.addEventListener('mousedown', () => triggerKey(keyDiv, freq));
-                    keyDiv.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyDiv, freq); });
+                    keyEl.addEventListener('mousedown', () => triggerNote(keyEl, noteName));
+                    keyEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNote(keyEl, noteName); });
                     
-                    board.appendChild(keyDiv);
-                    blackKeyLeftOffset += 48;
+                    container.appendChild(keyEl);
+                    whiteKeyOffset += 46;
                 } else {
-                    const keyDiv = document.createElement('div');
-                    keyDiv.className = 'black-key';
-                    keyDiv.style.right = `calc(100% - ${blackKeyLeftOffset - 15}px)`; // ڕێکخستنی شوێنی دوگمە ڕەشەکان
-                    keyDiv.setAttribute('data-freq', freq);
-                    keyDiv.setAttribute('data-note', item.note);
-                    keyDiv.innerHTML = `${showKeyLabels ? item.note : ''}<span>${showKeyLabels ? item.keyMap.toUpperCase() : ''}</span>`;
+                    const keyEl = document.createElement('div');
+                    keyEl.className = 'black-key';
+                    keyEl.style.right = `calc(100% - ${whiteKeyOffset - 14}px)`;
+                    keyEl.setAttribute('data-note', item.note);
+                    keyEl.setAttribute('data-fullname', noteName);
+                    keyEl.innerHTML = `${item.note}<small>${item.keyMap.toUpperCase()}</small>`;
                     
-                    keyDiv.addEventListener('mousedown', () => triggerKey(keyDiv, freq));
-                    keyDiv.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyDiv, freq); });
+                    keyEl.addEventListener('mousedown', () => triggerNote(keyEl, noteName));
+                    keyEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNote(keyEl, noteName); });
                     
-                    board.appendChild(keyDiv);
+                    container.appendChild(keyEl);
                 }
             });
         }
 
-        // سیستمی دەنگی Web Audio API
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx;
-
-        function playTone(frequency) {
-            if (!audioCtx) audioCtx = new AudioContext();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-
-            osc.type = currentWave;
-            osc.frequency.value = frequency;
-
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            const now = audioCtx.currentTime;
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.7, now + 0.04);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-
-            osc.start(now);
-            osc.stop(now + 1.2);
-        }
-
-        // لێدانی دوگمە و تۆمارکردن
-        let isRecording = false;
-        let recordedNotes = [];
-        let recordStartTime = 0;
-
-        function triggerKey(keyElement, freq) {
-            playTone(freq);
-            keyElement.classList.add('active');
-            setTimeout(() => keyElement.classList.remove('active'), 150);
+        function triggerNote(element, noteName) {
+            if (!synth) return;
+            synth.triggerAttackRelease(noteName, "8n");
+            
+            element.classList.add('active');
+            setTimeout(() => element.classList.remove('active'), 150);
 
             if (isRecording) {
-                const noteName = keyElement.getAttribute('data-note');
-                const timeElapsed = Date.now() - recordStartTime;
-                recordedNotes.push({ note: noteName, freq: freq, time: timeElapsed });
+                const noteShort = element.getAttribute('data-note');
+                recordedNotes.push({ note: noteShort, fullName: noteName, time: Date.now() - recordStartTime });
             }
         }
 
-        // کۆنتڕۆڵی ئۆکتاڤ
-        function changeOctave(dir) {
+        function shiftOctave(dir) {
             currentOctave += dir;
             if (currentOctave < 2) currentOctave = 2;
             if (currentOctave > 6) currentOctave = 6;
-            document.getElementById('octaveDisplay').innerText = `ئۆکتاڤ: ${currentOctave}`;
-            buildPiano();
+            document.getElementById('octaveLabel').innerText = `Octave: ${currentOctave}`;
+            buildKeyboard();
         }
 
-        // تۆمارکردن
-        function toggleRecord() {
-            const btn = document.getElementById('recBtn');
+        // Recording System
+        function toggleRecording() {
+            const btn = document.getElementById('recToggle');
             const status = document.getElementById('recStatus');
-            const playBtn = document.getElementById('playRecBtn');
+            const playBtn = document.getElementById('playRec');
 
             if (!isRecording) {
                 isRecording = true;
                 recordedNotes = [];
                 recordStartTime = Date.now();
-                btn.innerText = 'وەستاندنی تۆمار ⏹';
+                btn.innerText = 'Stop Record ⏹';
                 btn.className = 'btn btn-danger';
-                status.innerText = 'لە تۆمارکردندایە...';
-                status.className = 'status-badge recording';
+                status.innerText = 'Recording...';
+                status.className = 'badge active-rec';
                 playBtn.disabled = true;
             } else {
                 isRecording = false;
-                btn.innerText = 'تۆمارکردن ⏺';
-                btn.className = 'btn btn-primary';
-                status.innerText = `تۆمارکرا (${recordedNotes.length} نۆتە)`;
-                status.className = 'status-badge';
+                btn.innerText = 'Record ⏺';
+                btn.className = 'btn btn-accent';
+                status.innerText = `Recorded (${recordedNotes.length} notes)`;
+                status.className = 'badge';
                 if (recordedNotes.length > 0) playBtn.disabled = false;
             }
         }
 
-        function playRecording() {
-            if (recordedNotes.length === 0) return;
+        function playbackRecording() {
+            if (recordedNotes.length === 0 || !synth) return;
             const status = document.getElementById('recStatus');
-            status.innerText = 'لە لێدانەوەدایە...';
+            status.innerText = 'Playing back...';
 
             recordedNotes.forEach(item => {
                 setTimeout(() => {
-                    playTone(item.freq);
-                    // دۆزینەوەی دوگمە و ڕووناککردنەوەی
-                    const keys = document.querySelectorAll('.key, .black-key');
-                    keys.forEach(k => {
+                    synth.triggerAttackRelease(item.fullName, "8n");
+                    document.querySelectorAll('.key, .black-key').forEach(k => {
                         if (k.getAttribute('data-note') === item.note) {
                             k.classList.add('active');
                             setTimeout(() => k.classList.remove('active'), 150);
@@ -620,87 +651,104 @@
             });
 
             setTimeout(() => {
-                status.innerText = 'تۆمارکرا';
-            }, recordedNotes[recordedNotes.length - 1].time + 500);
+                status.innerText = 'Playback finished';
+            }, recordedNotes[recordedNotes.length - 1].time + 600);
         }
 
-        // ڕێکخستنەکان
-        function toggleLabels() {
-            showKeyLabels = document.getElementById('showLabels').checked;
-            buildPiano();
-        }
-
-        function changeWaveType() {
-            currentWave = document.getElementById('waveType').value;
-        }
-
-        // کۆنترۆڵی کیبۆردی کۆمپیوتەر بۆ پیانۆکە
+        // Computer Keyboard Mapping
         const keyMapObj = {
-            'a': 0, 'w': 1, 's': 2, 'e': 3, 'd': 4, 'f': 5,
-            't': 6, 'g': 7, 'y': 8, 'h': 9, 'u': 10, 'j': 11, 'k': 12
+            'a': 'C', 'w': 'C#', 's': 'D', 'e': 'D#', 'd': 'E', 'f': 'F',
+            't': 'F#', 'g': 'G', 'y': 'G#', 'h': 'A', 'u': 'A#', 'j': 'B', 'k': 'C5'
         };
 
         window.addEventListener('keydown', (e) => {
-            if (e.repeat) return; // ڕێگریکردن لە دووبارەبوونەوەی خێرا کاتێک دوگمەێک گیراوە
+            if (e.repeat || !synth) return;
             const char = e.key.toLowerCase();
             if (keyMapObj.hasOwnProperty(char)) {
-                const index = keyMapObj[char];
-                const boardKeys = document.querySelectorAll('.key, .black-key');
-                if (boardKeys[index]) {
-                    const freq = parseFloat(boardKeys[index].getAttribute('data-freq'));
-                    triggerKey(boardKeys[index], freq);
-                }
+                const targetNote = keyMapObj[char];
+                document.querySelectorAll('.key, .black-key').forEach(k => {
+                    if (k.getAttribute('data-note') === targetNote) {
+                        const fullName = k.getAttribute('data-fullname');
+                        triggerNote(k, fullName);
+                    }
+                });
             }
         });
 
-        // سیستمی وانەکان
-        let songInterval = null;
-        function loadSong(songType) {
-            const playerArea = document.getElementById('songPlayerArea');
-            const title = document.getElementById('currentSongTitle');
-            const instruction = document.getElementById('songInstruction');
-            playerArea.style.display = 'block';
+        // Lesson Player
+        function playLesson(songType) {
+            stopLesson();
+            const box = document.getElementById('lessonPlayerBox');
+            const title = document.getElementById('lessonTitle');
+            const status = document.getElementById('lessonStatus');
+            box.style.display = 'block';
 
             let sequence = [];
             if (songType === 'ode') {
-                title.innerText = 'ئۆدە بۆ خۆشی (Ode to Joy)';
-                instruction.innerText = 'ڕووناکی سەر دوگمەکان دەردەخات چۆن بیانژەنی...';
+                title.innerText = 'Ode to Joy - Ludwig van Beethoven';
                 sequence = ['E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'E', 'D', 'D'];
             } else if (songType === 'twinkle') {
-                title.innerText = 'ئەستێرەی بچووک (Twinkle Twinkle)';
-                instruction.innerText = 'بەدوای ڕووناکییەکەدا بڕۆ...';
+                title.innerText = 'Twinkle Twinkle Little Star';
                 sequence = ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'];
             }
 
-            let step = 0;
-            if (songInterval) clearInterval(songInterval);
+            status.innerText = 'Follow the highlighted keys...';
+            let index = 0;
 
-            songInterval = setInterval(() => {
-                if (step >= sequence.length) {
-                    clearInterval(songInterval);
+            activeLessonInterval = setInterval(() => {
+                if (index >= sequence.length) {
+                    stopLesson();
+                    status.innerText = 'Lesson completed successfully! 🎉';
+                    box.style.display = 'block';
                     return;
                 }
-                const targetNote = sequence[step];
-                const keys = document.querySelectorAll('.key, .black-key');
-                keys.forEach(k => {
-                    if (k.getAttribute('data-note') === targetNote) {
+                const currentNote = sequence[index];
+                document.querySelectorAll('.key, .black-key').forEach(k => {
+                    if (k.getAttribute('data-note') === currentNote) {
                         k.classList.add('highlight');
-                        setTimeout(() => k.classList.remove('highlight'), 400);
-                        playTone(parseFloat(k.getAttribute('data-freq')));
+                        setTimeout(() => k.classList.remove('highlight'), 350);
+                        const fullName = k.getAttribute('data-fullname');
+                        if (synth) synth.triggerAttackRelease(fullName, "8n");
                     }
                 });
-                step++;
-            }, 600);
+                index++;
+            }, 650);
         }
 
-        function stopSong() {
-            if (songInterval) clearInterval(songInterval);
-            document.getElementById('songPlayerArea').style.display = 'none';
+        function stopLesson() {
+            if (activeLessonInterval) clearInterval(activeLessonInterval);
+            const box = document.getElementById('lessonPlayerBox');
+            if (box) box.style.display = 'none';
         }
 
-        // دروستکردنی کیبۆردەکە لە کاتی کردنەوەی پەڕەکەدا
+        // Quiz Trainer
+        let currentQuizTarget = '';
+        function startQuiz() {
+            const notesPool = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+            currentQuizTarget = notesPool[Math.floor(Math.random() * notesPool.length)];
+            
+            document.getElementById('quizPrompt').innerText = `Find and click note: "${currentQuizTarget}" on the piano keyboard!`;
+            document.getElementById('quizFeedback').innerText = '';
+            
+            // Highlight target temporarily as a hint or leave it for testing
+            document.querySelectorAll('.key, .black-key').forEach(k => {
+                k.onclick = () => {
+                    if (k.getAttribute('data-note') === currentQuizTarget) {
+                        document.getElementById('quizFeedback').innerText = 'Correct! Great job! 🌟';
+                        triggerNote(k, k.getAttribute('data-fullname'));
+                        setTimeout(startQuiz, 1500);
+                    } else {
+                        document.getElementById('quizFeedback').style.color = 'var(--highlight)';
+                        document.getElementById('quizFeedback').innerText = 'Incorrect, try again!';
+                    }
+                };
+            });
+
+            document.getElementById('quizArea.innerHTML') = '';
+        }
+
         window.onload = () => {
-            buildPiano();
+            buildKeyboard();
         };
     </script>
 </body>
