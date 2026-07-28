@@ -2,691 +2,706 @@
 <html lang="ckb" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مەنارەی سەرکەوتن Pro Ultra 20X</title>
-
-    <!-- ڕێکخستنەکانی PWA و ئایفۆن -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="مەنارەی سەرکەوتن">
-    <meta name="theme-color" content="#022c22">
-
-    <!-- ئایکۆنی ئەپ بۆ ئایفۆن -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'><rect width='512' height='512' rx='120' fill='%23022c22'/><rect x='10' y='10' width='492' height='492' rx='110' fill='none' stroke='%23d97706' stroke-width='8'/><path d='M256 70c-100 0-180 80-180 180s80 180 180 180c25 0 49-5 71-15-70-20-120-85-120-165s50-145 120-165c-22-10-46-15-71-15z' fill='%23fbbf24'/><path d='M350 140l15 35 35 15-35 15-15 35-15-35-35-15 35-15z' fill='%23f59e0b'/></svg>">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ئەپی پێشکەوتووی فێربوونی پیانۆ - Master Piano Pro</title>
     <style>
-        body { font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .quran-font { font-family: 'Noto Naskh Arabic', serif; }
-        .emerald-gradient { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); }
-        .gold-glow { box-shadow: 0 0 30px rgba(217, 119, 6, 0.25); }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --white-key: #ffffff;
+            --white-key-active: #e2e8f0;
+            --black-key: #0f172a;
+            --black-key-active: #334155;
+            --highlight: #f43f5e;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            touch-action: manipulation;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid #334155;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #334155;
+            color: var(--text-main);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-primary);
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-content {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            border: 1px solid #334155;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 6px;
+        }
+
+        /* Piano Styles */
+        .piano-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #090d16;
+            padding: 25px 15px;
+            border-radius: 16px;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .piano-board {
+            display: flex;
+            position: relative;
+            height: 220px;
+        }
+
+        .key {
+            position: relative;
+            width: 48px;
+            height: 220px;
+            background: var(--white-key);
+            border: 1px solid #cbd5e1;
+            border-radius: 0 0 6px 6px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 12px;
+            color: #475569;
+            font-weight: bold;
+            font-size: 0.8rem;
+            user-select: none;
+            box-shadow: inset 0 -8px 6px rgba(0,0,0,0.1), 0 4px 4px rgba(0,0,0,0.2);
+            transition: background 0.05s, transform 0.05s;
+        }
+
+        .key span {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .key.active, .key:active {
+            background: var(--white-key-active);
+            transform: translateY(2px);
+            box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
+        }
+
+        .key.highlight {
+            background: #fde047 !important;
+            color: #0f172a;
+        }
+
+        .black-key {
+            position: absolute;
+            width: 30px;
+            height: 130px;
+            background: var(--black-key);
+            border-radius: 0 0 4px 4px;
+            z-index: 3;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 0.7rem;
+            user-select: none;
+            box-shadow: inset 0 -4px 4px rgba(255,255,255,0.1), 0 4px 6px rgba(0,0,0,0.4);
+            transition: background 0.05s;
+        }
+
+        .black-key span {
+            font-size: 0.55rem;
+            color: #64748b;
+        }
+
+        .black-key.active, .black-key:active {
+            background: var(--black-key-active);
+        }
+
+        .black-key.highlight {
+            background: var(--highlight) !important;
+            color: #ffffff;
+        }
+
+        /* Controls Panel */
+        .piano-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn:hover { background: #475569; }
+        .btn-primary { background: var(--accent-color); color: var(--bg-primary); }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-danger { background: var(--highlight); }
+
+        /* Recorder status */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            background: #334155;
+            color: var(--text-muted);
+        }
+        .status-badge.recording {
+            background: var(--highlight);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* Theory & Lessons content */
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .theory-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .theory-item h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .theory-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Song list */
+        .song-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #334155;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .song-info h4 { font-size: 0.95rem; color: var(--accent-color); margin-bottom: 3px; }
+        .song-info p { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Footer info */
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid #334155;
+            background: var(--bg-secondary);
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white pb-24">
+<body>
 
-    <!-- سەرپەڕەی ئەپڵیکەیشن -->
-    <header class="border-b border-emerald-500/20 bg-slate-900/95 backdrop-blur sticky top-0 z-50 p-4 pt-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center gap-3">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-11 h-11 rounded-2xl bg-slate-950 p-1 border border-amber-500/40 flex items-center justify-center gold-glow">
-                    <svg class="w-7 h-7 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-xl font-extrabold text-amber-400 tracking-wide">مەنارەی سەرکەوتن</h1>
-                        <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">Ultra 20X</span>
-                    </div>
-                    <p class="text-[11px] text-emerald-400">پلاتفۆرمی هەمەلایەنەی بەدیهێنانی خەونەکان</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <button onclick="exportData()" title="دابەزاندنی بکئەپ" class="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-300 hover:text-amber-400 text-xs flex items-center gap-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                </button>
-                <div class="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
-                    <span class="text-amber-400">🔥</span>
-                    <span id="streakCount" class="font-bold text-amber-400">1 ڕۆژ</span>
-                </div>
-            </div>
-        </div>
+    <header>
+        <h1>🎹 Master Piano Pro</h1>
+        <p>ئەپی پێشکەوتووی فێربوونی پیانۆ، ژەنین و تیۆری مۆسیقا</p>
     </header>
 
-    <!-- ناوەڕۆکی سەرەکی -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6">
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('play')">ژەنینی ڕاستەقینە</button>
+        <button class="tab-btn" onclick="switchTab('lessons')">وانەکانی فێربوون</button>
+        <button class="tab-btn" onclick="switchTab('theory')">تیۆری مۆسیقا</button>
+        <button class="tab-btn" onclick="switchTab('settings')">ڕێکخستنەکان</button>
+    </div>
 
-        <!-- بەشی ١: ئامانج و نەخشەرێگا (Goals Dashboard) -->
-        <div id="view-goals" class="space-y-6">
-            <div class="emerald-gradient border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden shadow-2xl">
-                <div class="space-y-3 relative z-10">
-                    <span class="bg-amber-500/20 text-amber-300 text-[11px] font-bold px-3 py-1 rounded-full border border-amber-500/30">یاسای گەردوونی ئیسلام</span>
-                    <h2 class="text-xl md:text-2xl font-bold text-white leading-relaxed">
-                        ﴿ وَأَن لَّيْسَ لِلإِنسَانِ إِلاَّ مَا سَعَى ۝ وَأَنَّ سَعْيَهُ سَوْفَ يُرَى ﴾
-                    </h2>
-                    <p class="text-xs text-slate-300 leading-relaxed max-w-2xl">
-                        خەونەکانت لێرە تۆماربکە و دابەشیان بکە بۆ هەنگاوی بچووک. نیەتت پاکبکەرەوە و کردارت بخەرە گەڕ.
-                    </p>
+    <main>
+        <!-- بەشی یەکەم: ژەنین و تۆمارکردن -->
+        <div id="play" class="section-content active">
+            <div class="card">
+                <div class="piano-controls">
+                    <div class="control-group">
+                        <button class="btn btn-primary" id="recBtn" onclick="toggleRecord()">تۆمارکردن ⏺</button>
+                        <button class="btn" id="playRecBtn" onclick="playRecording()" disabled>لێدانەوە ▶</button>
+                        <span id="recStatus" class="status-badge">ئامادە</span>
+                    </div>
+                    <div class="control-group">
+                        <button class="btn" onclick="changeOctave(-1)">◀ ئۆکتاڤی نزم</button>
+                        <span id="octaveDisplay" style="font-size: 0.85rem; font-weight: bold;">ئۆکتاڤ: 4</span>
+                        <button class="btn" onclick="changeOctave(1)">ئۆکتاڤی بەرز ▶</button>
+                    </div>
+                </div>
+
+                <div class="piano-wrapper">
+                    <div class="piano-board" id="pianoBoard">
+                        <!-- کیبۆردەکە بە جاواسکریپت بە شێوەیەکی داینامیک دروست دەکرێت -->
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- فۆڕمی زیادکردنی ئامانجی نوێ -->
-                <div class="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4 shadow-xl">
-                    <h3 class="font-bold text-amber-400 text-sm border-b border-slate-800 pb-3 flex justify-between items-center">
-                        <span>تۆمارکردنی خەونی نوێ</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">SMART Plan</span>
-                    </h3>
+            <div class="card">
+                <h2>ڕێنمایی بەکارهێنانی خێرا</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                    دەتوانیت پەنجە بنێیت بە دوگمەکانی سەر شاشەدا یان ڕاستەوخۆ کیبۆردی کۆمپیوتەرەکەت بەکاربهێنیت (پیتەکانی A تا K بۆ دوگمە سپییەکان و W, E, T, Y, U بۆ دوگمە ڕەشەکان). سیستمی دەنگی پێشکەوتووی Web Audio API بەکارهاتووە بۆ دەرچوونی دەنگی پاک و سروشتی.
+                </p>
+            </div>
+        </div>
 
-                    <form id="goalForm" onsubmit="addGoal(event)" class="space-y-3">
-                        <div>
-                            <label class="text-xs text-slate-400 block mb-1">پۆلێنی خەونەکەت</label>
-                            <select id="goalCategory" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-amber-300 font-bold focus:outline-none">
-                                <option value="دینی و ڕۆحی">🕌 دینی و ڕۆحی</option>
-                                <option value="دارایی و کار">💰 دارایی و کار</option>
-                                <option value="خوێندن و فێربوون">🎓 خوێندن و فێربوون</option>
-                                <option value="تەندروستی و وەرزش">🌿 تەندروستی و وەرزش</option>
-                                <option value="خێزانی و کۆمەڵایەتی">❤️ خێزانی و کۆمەڵایەتی</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="text-xs text-slate-400 block mb-1">ناونیشانی خەونەکە</label>
-                            <input type="text" id="goalTitle" required placeholder="بۆ نموونە: دامەزراندنی پڕۆژەیەکی سەربەخۆ" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-
-                        <div>
-                            <label class="text-xs text-slate-400 block mb-1">نیەت (النيّة)</label>
-                            <input type="text" id="goalNiyyah" required placeholder="بۆ نموونە: بۆ ڕزقی حەڵاڵ و بەخشینی سەدەقە" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-
-                        <div>
-                            <label class="text-xs text-slate-400 block mb-1">هەنگاوی کرداری سەرەکی (الأخذ بالأسباب)</label>
-                            <input type="text" id="goalAction" required placeholder="بۆ نموونە: ڕۆژانە ١ کاتژمێر خوێندن" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-
-                        <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition shadow-lg shadow-amber-950/20">
-                            زیادکردن بۆ لیستی خەونەکانم
-                        </button>
-                    </form>
+        <!-- بەشی دووەم: وانەکان و فێربوونی گۆرانی -->
+        <div id="lessons" class="section-content">
+            <div class="card">
+                <h2>گۆرانییە فێرکارییەکان</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">یەکێک لەم ئاوازانە هەڵبژێرە بۆ ئەوەی ڕێنماییت بکات چۆن بیانژەنی:</p>
+                
+                <div class="song-card">
+                    <div class="song-info">
+                        <h4>ئۆدە بۆ خۆشی (Ode to Joy)</h4>
+                        <p>ئاستی: سەرەتایی | بتهۆڤن</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadSong('ode')">فێربوون</button>
                 </div>
 
-                <!-- لیستی ئامانجەکان -->
-                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                        <h3 class="font-bold text-slate-200 text-sm">لیستی خەونەکان و نەخشەرێگا</h3>
-                        <div class="flex items-center gap-2">
-                            <span id="goalCount" class="text-xs bg-slate-800 text-amber-400 px-2.5 py-1 rounded-full font-bold">0</span>
-                        </div>
+                <div class="song-card">
+                    <div class="song-info">
+                        <h4>سەرەتای ئەستێرەی بچووک (Twinkle Twinkle)</h4>
+                        <p>ئاستی: زۆر ئاسان بۆ منداڵان</p>
                     </div>
+                    <button class="btn btn-primary" onclick="loadSong('twinkle')">فێربوون</button>
+                </div>
 
-                    <div id="goalsList" class="space-y-4">
-                        <!-- نەخشەی خەونەکان بە JS دروست دەکرێت -->
+                <div id="songPlayerArea" style="margin-top: 15px; display: none; background: #0f172a; padding: 15px; border-radius: 8px;">
+                    <h3 id="currentSongTitle" style="color: var(--accent-color); font-size: 1rem; margin-bottom: 8px;"></h3>
+                    <p id="songInstruction" style="font-size: 0.85rem; margin-bottom: 10px;"></p>
+                    <button class="btn btn-danger" onclick="stopSong()">وەستاندن</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- بەشی سێیەم: تیۆری مۆسیقا و زانیاری ورد -->
+        <div id="theory" class="section-content">
+            <div class="card">
+                <h2>بنەماکانی پێشکەوتووی پیانۆ و نۆتەناسی</h2>
+                <div class="theory-grid">
+                    <div class="theory-item">
+                        <h3>١. سیستمی نۆتەکان (Solfège)</h3>
+                        <p>حەوت نۆتەی سەرەکی پێکدێن لە (Do, Re, Mi, Fa, Sol, La, Si) کە بەرامبەر پیتە ئینگلیزییەکانن (C, D, E, F, G, A, B).</p>
+                    </div>
+                    <div class="theory-item">
+                        <h3>٢. پەنجەدانانی دروست (Fingering)</h3>
+                        <p>بەکارهێنانی پەنجەی گەورە وەک (1) تا پەنجەی بچووک وەک (5) زامنکەری خێرایی و ڕێگریکردنە لە شەکەتبوونی ماسولکەکانی دەست.</p>
+                    </div>
+                    <div class="theory-item">
+                        <h3>٣. کۆردەکان (Chords)</h3>
+                        <p>تێکەڵکردنی سێ نۆتە یان زیاتر بەیەکەوە (بۆ نموونە C, E, G) دەنگێکی هارمۆنی و بەهێز دروست دەکات کە بناغەی مۆسیقایە.</p>
+                    </div>
+                    <div class="theory-item">
+                        <h3>٤. لەرەلەر و ئۆکتاڤ (Frequency)</h3>
+                        <p>هەرچی ئۆکتاڤ بەرزتر بێت، لەرەلەری شەپۆلی دەنگەکە خێرا‌تر و دەنگەکەش باری ناسکتر و زوڕناویی تر دەبێت.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- بەشی ٢: شۆپێنەری عادات و تایمەر (Habits & Barakah Timer) -->
-        <div id="view-habits" class="hidden space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- تۆمارکەری عادات -->
-                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
-                    <h3 class="text-amber-400 font-bold text-base border-b border-slate-800 pb-3 flex justify-between items-center">
-                        <span>عادات و بەرەکەتی ڕۆژانە</span>
-                        <span class="text-xs text-slate-400">ڕێژەی ڕاگواستن: <strong id="habitProgress" class="text-emerald-400">0%</strong></span>
-                    </h3>
-
-                    <div id="habitsList" class="space-y-3">
-                        <!-- لیستی عادات بە JS -->
+        <!-- بەشی چوارەم: ڕێکخستنەکان -->
+        <div id="settings" class="section-content">
+            <div class="card">
+                <h2>ڕێکخستنەکانی ئەپ</h2>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>پیشاندانی پیتەکان لەسەر دوگمەکان</span>
+                    <input type="checkbox" id="showLabels" checked onchange="toggleLabels()" style="width: 18px; height: 18px; cursor: pointer;">
                     </div>
-                </div>
-
-                <!-- تایمەری بەرەکەت (Pomodoro) -->
-                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 text-center space-y-6 shadow-xl">
-                    <div>
-                        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-3 py-1 rounded-full font-bold">تایمەری بەرەکەت و سەرنج دان</span>
-                        <h3 class="text-lg font-bold text-slate-200 mt-2">Barakah Focus Timer (٢٥ خولەک)</h3>
-                        <p class="text-xs text-slate-400 mt-1">تەنها سەرنج بدەرە سەر ئامانجەکەت بە بێ هەڵخەڵەتانی مۆبایل.</p>
-                    </div>
-
-                    <div class="text-5xl font-mono font-extrabold text-amber-400 bg-slate-950 py-6 rounded-2xl border border-slate-800 gold-glow" id="timerDisplay">
-                        25:00
-                    </div>
-
-                    <div class="flex gap-3 justify-center">
-                        <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition">
-                            دەستپێکردن
-                        </button>
-                        <button onclick="resetTimer()" class="px-5 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-xl text-xs">
-                            ڕێکخستنەوە
-                        </button>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>جۆری دەنگی ئۆسیلەیتەر (Waveform)</span>
+                        <select id="waveType" onchange="changeWaveType()" style="background: #334155; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer;">
+                            <option value="triangle">سێگۆشە (نەرم و هاوشێوەی پیانۆ)</option>
+                            <option value="sine">ساینی (پاق و خاوێن)</option>
+                            <option value="sawtooth">سۆتوس (تیژ و ڕۆک)</option>
+                            <option value="square">چوارگۆشە (ئیکترۆنی کۆن)</option>
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- بەشی ٣: تەسبیحی دەنگی (Digital Dhikr & Sounds) -->
-        <div id="view-tasbih" class="hidden space-y-6">
-            <div class="max-w-xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 text-center space-y-6 shadow-xl">
-                <h3 class="text-amber-400 font-bold text-base">تەسبیحی ئەلیکترۆنیی ژیر (دەنگی زانیاری)</h3>
-
-                <select id="dhikrSelect" onchange="resetTasbih()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-amber-300 font-bold focus:outline-none">
-                    <option value="أستغفر الله وأتوب إليه">أستغفر الله وأتوب إليه (کلیلی ڕزق و بەخشین)</option>
-                    <option value="اللهم صلِّ وسلم على نبينا محمد">اللهم صلِّ وسلم على نبينا محمد (لابردنی خەم)</option>
-                    <option value="لا حول ولا قوة إلا بالله">لا حول ولا قوة إلا بالله (گەنجینەی بەهەشت)</option>
-                    <option value="سبحان الله وبحمده سبحان الله العظيم">سبحان الله وبحمده سبحان الله العظيم</option>
-                    <option value="لا إله إلا الله وحده لا شريك له">لا إله إلا الله وحده لا شريك له</option>
-                </select>
-
-                <div class="flex justify-center gap-4 text-xs">
-                    <button onclick="setTarget(33)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">ئامانج: ٣٣</button>
-                    <button onclick="setTarget(100)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">ئامانج: ١٠٠</button>
-                    <button onclick="setTarget(1000)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">ئامانج: ١٠٠٠</button>
-                </div>
-
-                <div onclick="countTasbih()" class="relative w-48 h-48 mx-auto bg-slate-950 rounded-full border-4 border-amber-500/40 flex flex-col items-center justify-center shadow-2xl gold-glow cursor-pointer active:scale-95 transition select-none">
-                    <span id="tasbihDisplay" class="text-5xl font-extrabold font-mono text-amber-400">0</span>
-                    <span id="targetDisplay" class="text-[10px] text-slate-500 mt-2">ئامانج: ١٠٠</span>
-                </div>
-
-                <div class="flex gap-3 justify-center">
-                    <button onclick="toggleAudio()" id="audioToggleBtn" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
-                        <span>دەنگ: چالاکە</span>
-                    </button>
-                    <button onclick="resetTasbih()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-xl text-xs">
-                        سفرکردنەوە
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- بەشی ٤: ڕێنیشاندەری ژیری دەستکرد (AI Companion) -->
-        <div id="view-ai" class="hidden space-y-6">
-            <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 space-y-5 shadow-xl">
-                <div class="flex items-center space-x-3 space-x-reverse border-b border-slate-800 pb-4">
-                    <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-amber-400 text-base">ڕێنیشاندەری ژیری دەستکرد (Gemini 2.5 Flash)</h3>
-                        <p class="text-xs text-slate-400">ڕاوێژ لە قورئان، سوننەت و هەنگاوە کردارەکان بپۆشە</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 text-xs">
-                    <button onclick="setPrompt('چۆن دەتوانم ئارامی دەروونی بەدەست بێنم لە کاتی قورسی کاردا؟')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">🌿 ئارامی دەروونی</button>
-                    <button onclick="setPrompt('پلانێکی ٧ ڕۆژە بدارێژە بۆ فێربوونی بەردەوام')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">🎓 پلانی خوێندن</button>
-                    <button onclick="setPrompt('دوعا و یاساکانی ڕزقی حەڵاڵ چیین؟')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300">💰 ڕزقی حەڵاڵ</button>
-                </div>
-
-                <div class="space-y-3">
-                    <textarea id="dreamInput" rows="3" placeholder="پرسیارەکەت یان خەونەکەت لێرە بنووسە..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs text-slate-200 focus:outline-none focus:border-amber-500 transition"></textarea>
-
-                    <button id="getAiAdviceBtn" onclick="generateIslamicAdvice()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-2xl text-xs shadow-lg shadow-emerald-950/50 transition flex justify-center items-center gap-2">
-                        <span>وەرگرتنی ڕێنمایی بە زمانی کوردی</span>
-                    </button>
-                </div>
-
-                <div id="aiResponseBox" class="hidden bg-slate-950 rounded-2xl p-5 border border-slate-800 text-xs text-slate-300 leading-relaxed space-y-4">
-                </div>
-            </div>
-        </div>
-
-        <!-- بەشی ٥: دەفتەری سوپاسگوزاری (Gratitude & Reflection Journal) -->
-        <div id="view-journal" class="hidden space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- فۆڕمی ڕۆژژمێر -->
-                <div class="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <h3 class="font-bold text-amber-400 text-sm border-b border-slate-800 pb-3">تۆمارکردنی سوپاسگوزاریی ڕۆژانە</h3>
-
-                    <form onsubmit="addJournalEntry(event)" class="space-y-3">
-                        <div>
-                            <label class="text-xs text-slate-400 block mb-1">هەستی ئەمڕۆت</label>
-                            <select id="journalMood" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-amber-300 font-bold">
-                                <option value="🤲 سوپاسگوزار">🤲 سوپاسگوزار (شاکر)</option>
-                                <option value="😊 بەهیوا">😊 بەهیوا و پڕوزە</option>
-                                <option value="🌿 ئارام">🌿 ئارام و خاوەن هەست</option>
-                                <option value="💡 بیرکەرەوە">💡 بیرکەرەوە</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="text-xs text-slate-400 block mb-1">ئەمڕۆ بۆ چی سوپاسگوزاری لە پەروەردگارت؟</label>
-                            <textarea id="journalContent" required rows="3" placeholder="نیعمەتێک یان سەرکەوتنێکی بچووکی ئەمڕۆت بنووسە..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-amber-500"></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition">
-                            تۆمارکردن لە دەفتەردا
-                        </button>
-                    </form>
-                </div>
-
-                <!-- لیستی نەخشەکان -->
-                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <h3 class="font-bold text-slate-200 text-sm border-b border-slate-800 pb-3">دەفتەری سوپاسگوزارییەکانی من</h3>
-                    <div id="journalList" class="space-y-3">
-                        <!-- بیرەوەرییەکان بە JS -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- بەشی ٦: کتێبخانە و نوێژەکان (Library & Prayer Times) -->
-        <div id="view-library" class="hidden space-y-6">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h3 class="text-amber-400 font-bold text-base">کتێبخانەی هەڵبژێردراوی دوعا و ئایەتەکان</h3>
-                    <input type="text" id="duaSearch" oninput="filterDuas()" placeholder="گەڕان لە دوعاکاندا..." class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none">
-                </div>
-
-                <div id="duaContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- دوعاکان لەڕێگەی JS دەکێشرێن -->
-                </div>
-            </div>
-        </div>
-
     </main>
 
-    <!-- بەاری هێمابەندی خوارەوە باری مۆبایل (Mobile Bottom Navigation Bar) -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-4 py-2 z-50">
-        <div class="max-w-md mx-auto flex justify-around items-center">
-            <button onclick="switchTab('goals')" id="nav-goals" class="flex flex-col items-center text-amber-400 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                <span class="text-[10px] mt-1 font-bold">ئامانجەکان</span>
-            </button>
+    <footer>
+        <p>Master Piano Pro App &copy; 2026 - هەموو مافێک پارێزراوە بۆ گەشەپێدانی زیرەک</p>
+    </footer>
 
-            <button onclick="switchTab('habits')" id="nav-habits" class="flex flex-col items-center text-slate-400 hover:text-amber-400 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-[10px] mt-1 font-bold">عادات</span>
-            </button>
-
-            <button onclick="switchTab('tasbih')" id="nav-tasbih" class="flex flex-col items-center text-slate-400 hover:text-amber-400 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-[10px] mt-1 font-bold">تەسبیح</span>
-            </button>
-
-            <button onclick="switchTab('ai')" id="nav-ai" class="flex flex-col items-center text-slate-400 hover:text-amber-400 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                <span class="text-[10px] mt-1 font-bold">AI Coach</span>
-            </button>
-
-            <button onclick="switchTab('journal')" id="nav-journal" class="flex flex-col items-center text-slate-400 hover:text-amber-400 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 012.828 0L20 4.828a2 2 0 010 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                <span class="text-[10px] mt-1 font-bold">دەفتەر</span>
-            </button>
-
-            <button onclick="switchTab('library')" id="nav-library" class="flex flex-col items-center text-slate-400 hover:text-amber-400 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                <span class="text-[10px] mt-1 font-bold">کتێبخانە</span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- کاتژمێری لۆجیکی بەرنامە -->
     <script>
-        const apiKey = "";
-
-        // داتای سەرەکی لە LocalStorage
-        let goals = JSON.parse(localStorage.getItem('m20x_goals')) || [
-            {
-                id: 1,
-                category: "دارایی و کار",
-                title: "دامەزراندنی پڕۆژەیەکی حەڵاڵی سەربەخۆ",
-                niyyah: "دابینکردنی ڕزقی پاک بۆ خێزان و یاریدەدانی فەقیران",
-                action: "ڕۆژانە ١ کاتژمێر خوێندن لەسەر بەرێوەبردن",
-                steps: [
-                    { title: "دیاریکردنی جۆری پڕۆژەکە", done: true },
-                    { title: "لێکۆڵینەوە لە ئاستی بازاڕ", done: false },
-                    { title: "پاشەکەوتکردنی سەرمایەی دەستپێک", done: false }
-                ]
-            }
-        ];
-
-        let habits = JSON.parse(localStorage.getItem('m20x_habits')) || [
-            { title: "خوێندنی نوێژی بەیانی لە کاتی خۆیدا", done: false },
-            { title: "١٠٠ جار الاستغفار لەگەڵ دوعای بەیانیان", done: false },
-            { title: "کارکردنی focus بۆ ٤٥ خولەک لەسەر خەونەکان", done: false },
-            { title: "خوێندنەوەی ١ پەڕە لە قورئانی پیرۆز", done: false }
-        ];
-
-        let journals = JSON.parse(localStorage.getItem('m20x_journals')) || [
-            { id: 1, mood: "🤲 سوپاسگوزار", text: "ئەمڕۆ سوپاس بۆ خودا توانیم هەنگاوێکی ئەرێنی بەرەو ئامانجەکەم بنێم.", date: "ئەمڕۆ" }
-        ];
-
-        let tasbihCount = parseInt(localStorage.getItem('m20x_tasbih')) || 0;
-        let tasbihTarget = parseInt(localStorage.getItem('m20x_target')) || 100;
-        let isAudioEnabled = true;
-
-        // داتای دوعاکان
-        const duaLibrary = [
-            { title: "دوعای فراوانی ڕزقی حەڵاڵ", arabic: "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ", kurdish: "خودایە بە حەڵاڵی خۆت بێپێویستم بکە لە حەرام، و بە فەزڵی خۆت بێپێویستم بکە لە هەمووان." },
-            { title: "دوعای سەرکەوتن و ئاسانکاری", arabic: "رَبِّ اشْرَحْ لِي صَدْرِي ۝ وَيَسِّرْ لِي أَمْرِي", kurdish: "پەروەردگارم دڵم بەرفراوان بکە و کارەکانمم بۆ ئاسان بکە." },
-            { title: "دوعای زیادبوونی زانست", arabic: "رَّبِّ زِدْنِي عِلْمًا", kurdish: "پەروەردگارم زانست و زانیاریم پێ ببەخشە." },
-            { title: "دوعای لابردنی تەنگانە و خەم", arabic: "لا إِلَهَ إِلا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ", kurdish: "هیچ پەرستراوێک نییە جگە لە تۆ، پاکی و بێگەردی بۆ تۆیە، بەڕاستی من لە زۆرداران بووم." }
-        ];
-
-        // سوپەر لۆجیکی دەنگی Web Audio API بۆ تەسبیح
-        function playClickSound() {
-            if (!isAudioEnabled) return;
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(580, ctx.currentTime);
-                gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.08);
-
-                if (navigator.vibrate) {
-                    navigator.vibrate(25);
-                }
-            } catch (e) {}
-        }
-
-        function toggleAudio() {
-            isAudioEnabled = !isAudioEnabled;
-            document.getElementById('audioToggleBtn').innerText = isAudioEnabled ? "دەنگ: چالاکە" : "دەنگ: ناچالاکە";
-        }
-
-        // بەڕێوەبردنی تابەکان
+        // سیستمی گۆڕینی تابەکان
         function switchTab(tabId) {
-            const views = ['goals', 'habits', 'tasbih', 'ai', 'journal', 'library'];
-            views.forEach(v => {
-                document.getElementById(`view-${v}`).classList.add('hidden');
-                const btn = document.getElementById(`nav-${v}`);
-                if (btn) btn.className = "flex flex-col items-center text-slate-400 hover:text-amber-400 transition";
-            });
-
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            const activeNav = document.getElementById(`nav-${tabId}`);
-            if (activeNav) activeNav.className = "flex flex-col items-center text-amber-400 transition font-bold";
+            document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
 
-        // کۆنترۆڵی ئامانجەکان
-        function renderGoals() {
-            const container = document.getElementById('goalsList');
-            document.getElementById('goalCount').innerText = goals.length;
-            localStorage.setItem('m20x_goals', JSON.stringify(goals));
+        // زانیاری نۆتەکان و لەرەلەرەکانیان (Octave 4 بنەڕەتی)
+        let currentOctave = 4;
+        let currentWave = 'triangle';
+        let showKeyLabels = true;
 
-            if (goals.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">هیچ خەونێک تۆمار نەکراوە.</p>`;
-                return;
-            }
+        const baseNotes = [
+            { note: 'C', type: 'white', keyMap: 'a', freqMultiplier: 1 },
+            { note: 'C#', type: 'black', keyMap: 'w', freqMultiplier: 1.05946 },
+            { note: 'D', type: 'white', keyMap: 's', freqMultiplier: 1.12246 },
+            { note: 'D#', type: 'black', keyMap: 'e', freqMultiplier: 1.18921 },
+            { note: 'E', type: 'white', keyMap: 'd', freqMultiplier: 1.25992 },
+            { note: 'F', type: 'white', keyMap: 'f', freqMultiplier: 1.33484 },
+            { note: 'F#', type: 'black', keyMap: 't', freqMultiplier: 1.41421 },
+            { note: 'G', type: 'white', keyMap: 'g', freqMultiplier: 1.49831 },
+            { note: 'G#', type: 'black', keyMap: 'y', freqMultiplier: 1.58740 },
+            { note: 'A', type: 'white', keyMap: 'h', freqMultiplier: 1.68179 },
+            { note: 'A#', type: 'black', keyMap: 'u', freqMultiplier: 1.78180 },
+            { note: 'B', type: 'white', keyMap: 'j', freqMultiplier: 1.88775 },
+            { note: 'C5', type: 'white', keyMap: 'k', freqMultiplier: 2.0 }
+        ];
 
-            container.innerHTML = goals.map(g => `
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded font-bold border border-amber-500/20">${g.category || 'گشتی'}</span>
-                            <h4 class="font-bold text-amber-400 text-sm mt-1">${g.title}</h4>
-                        </div>
-                        <button onclick="deleteGoal(${g.id})" class="text-slate-600 hover:text-red-400 text-xs">سڕینەوە</button>
-                    </div>
+        // بنەمای فرێکوێنسی C4 = 261.63 Hz
+        const baseC4Freq = 261.63;
 
-                    <div class="space-y-1 text-xs text-slate-400">
-                        <p><strong class="text-slate-300">النيّة:</strong> ${g.niyyah}</p>
-                        <p><strong class="text-slate-300">کۆشش:</strong> ${g.action}</p>
-                    </div>
+        function buildPiano() {
+            const board = document.getElementById('pianoBoard');
+            board.innerHTML = '';
+            
+            let blackKeyLeftOffset = 34; 
 
-                    <div class="space-y-1.5 pt-2 border-t border-slate-900">
-                        <span class="text-[10px] text-slate-500 block">هەنگاوەکانی جێبەجێکردن:</span>
-                        ${g.steps.map((st, idx) => `
-                            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
-                                <input type="checkbox" ${st.done ? 'checked' : ''} onchange="toggleStep(${g.id}, ${idx})" class="w-3.5 h-3.5 accent-emerald-500 rounded">
-                                <span class="${st.done ? 'line-through text-slate-500' : ''}">${st.title}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addGoal(e) {
-            e.preventDefault();
-            const category = document.getElementById('goalCategory').value;
-            const title = document.getElementById('goalTitle').value;
-            const niyyah = document.getElementById('goalNiyyah').value;
-            const action = document.getElementById('goalAction').value;
-
-            goals.unshift({
-                id: Date.now(),
-                category,
-                title,
-                niyyah,
-                action,
-                steps: [
-                    { title: action, done: false },
-                    { title: "کۆششی بەردەوام و توەکل", done: false },
-                    { title: "دوعای ڕۆژانە بۆ بەدیهێنانی", done: false }
-                ]
-            });
-
-            renderGoals();
-            document.getElementById('goalForm').reset();
-        }
-
-        function toggleStep(goalId, stepIdx) {
-            const goal = goals.find(g => g.id === goalId);
-            if (goal) {
-                goal.steps[stepIdx].done = !goal.steps[stepIdx].done;
-                renderGoals();
-            }
-        }
-
-        function deleteGoal(id) {
-            goals = goals.filter(g => g.id !== id);
-            renderGoals();
-        }
-
-        // کۆنترۆڵی عادات
-        function renderHabits() {
-            const container = document.getElementById('habitsList');
-            localStorage.setItem('m20x_habits', JSON.stringify(habits));
-
-            const completed = habits.filter(h => h.done).length;
-            const pct = habits.length ? Math.round((completed / habits.length) * 100) : 0;
-            document.getElementById('habitProgress').innerText = `${pct}%`;
-
-            container.innerHTML = habits.map((h, i) => `
-                <label class="flex items-center justify-between bg-slate-950 p-3.5 rounded-2xl border border-slate-800 cursor-pointer">
-                    <span class="text-xs text-slate-200 ${h.done ? 'line-through text-slate-500' : ''}">${h.title}</span>
-                    <input type="checkbox" ${h.done ? 'checked' : ''} onchange="toggleHabit(${i})" class="w-4 h-4 accent-emerald-500 rounded">
-                </label>
-            `).join('');
-        }
-
-        function toggleHabit(idx) {
-            habits[idx].done = !habits[idx].done;
-            renderHabits();
-        }
-
-        // کۆنترۆڵی تەسبیح
-        function countTasbih() {
-            tasbihCount++;
-            playClickSound();
-            document.getElementById('tasbihDisplay').innerText = tasbihCount;
-            localStorage.setItem('m20x_tasbih', tasbihCount);
-        }
-
-        function setTarget(t) {
-            tasbihTarget = t;
-            document.getElementById('targetDisplay').innerText = `ئامانج: ${t}`;
-            localStorage.setItem('m20x_target', t);
-        }
-
-        function resetTasbih() {
-            tasbihCount = 0;
-            document.getElementById('tasbihDisplay').innerText = 0;
-            localStorage.setItem('m20x_tasbih', 0);
-        }
-
-        // کۆنترۆڵی دەفتەر
-        function renderJournals() {
-            const container = document.getElementById('journalList');
-            localStorage.setItem('m20x_journals', JSON.stringify(journals));
-
-            container.innerHTML = journals.map(j => `
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-amber-400 font-bold">${j.mood}</span>
-                        <span class="text-slate-500 text-[10px]">${j.date}</span>
-                    </div>
-                    <p class="text-xs text-slate-300 leading-relaxed">${j.text}</p>
-                </div>
-            `).join('');
-        }
-
-        function addJournalEntry(e) {
-            e.preventDefault();
-            const mood = document.getElementById('journalMood').value;
-            const text = document.getElementById('journalContent').value;
-
-            journals.unshift({
-                id: Date.now(),
-                mood,
-                text,
-                date: new Date().toLocaleDateString('ckb-IR')
-            });
-
-            renderJournals();
-            document.getElementById('journalContent').value = '';
-        }
-
-        // ڕێنمای دوعاکان
-        function renderDuas(filter = "") {
-            const container = document.getElementById('duaContainer');
-            const list = duaLibrary.filter(d => d.title.includes(filter) || d.kurdish.includes(filter));
-
-            container.innerHTML = list.map(d => `
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                    <span class="text-xs text-amber-400 font-bold">${d.title}</span>
-                    <p class="quran-font text-amber-300 text-sm">${d.arabic}</p>
-                    <p class="text-[11px] text-slate-400">${d.kurdish}</p>
-                </div>
-            `).join('');
-        }
-
-        function filterDuas() {
-            const q = document.getElementById('duaSearch').value;
-            renderDuas(q);
-        }
-
-        // تایمەری بەرەکەت
-        let timerSeconds = 1500;
-        let timerInterval = null;
-
-        function updateTimerDisplay() {
-            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-            const s = (timerSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
-        }
-
-        function toggleTimer() {
-            const btn = document.getElementById('startTimerBtn');
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                btn.innerText = "بەردەوامبوون";
-            } else {
-                btn.innerText = "وەستان";
-                timerInterval = setInterval(() => {
-                    if (timerSeconds > 0) {
-                        timerSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        timerInterval = null;
-                        alert("ماوەی کارکردن تەواو بوو! لە خودا داوای بەرەکەت بکه.");
-                    }
-                }, 1000);
-            }
-        }
-
-        function resetTimer() {
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = null;
-            timerSeconds = 1500;
-            updateTimerDisplay();
-            document.getElementById('startTimerBtn').innerText = "دەستپێکردن";
-        }
-
-        // AI Logic
-        function setPrompt(text) {
-            document.getElementById('dreamInput').value = text;
-        }
-
-        async function fetchGeminiWithRetry(url, payload, retries = 5) {
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(payload)
-                    });
-                    if (res.ok) return await res.json();
-                } catch (e) {
-                    if (i === retries - 1) throw e;
+            baseNotes.forEach((item, index) => {
+                const freq = baseC4Freq * item.freqMultiplier * Math.pow(2, currentOctave - 4);
+                
+                if (item.type === 'white') {
+                    const keyDiv = document.createElement('div');
+                    keyDiv.className = 'key';
+                    keyDiv.setAttribute('data-freq', freq);
+                    keyDiv.setAttribute('data-note', item.note);
+                    keyDiv.innerHTML = `${showKeyLabels ? item.note : ''}<span>${showKeyLabels ? item.keyMap.toUpperCase() : ''}</span>`;
+                    
+                    keyDiv.addEventListener('mousedown', () => triggerKey(keyDiv, freq));
+                    keyDiv.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyDiv, freq); });
+                    
+                    board.appendChild(keyDiv);
+                    blackKeyLeftOffset += 48;
+                } else {
+                    const keyDiv = document.createElement('div');
+                    keyDiv.className = 'black-key';
+                    keyDiv.style.right = `calc(100% - ${blackKeyLeftOffset - 15}px)`; // ڕێکخستنی شوێنی دوگمە ڕەشەکان
+                    keyDiv.setAttribute('data-freq', freq);
+                    keyDiv.setAttribute('data-note', item.note);
+                    keyDiv.innerHTML = `${showKeyLabels ? item.note : ''}<span>${showKeyLabels ? item.keyMap.toUpperCase() : ''}</span>`;
+                    
+                    keyDiv.addEventListener('mousedown', () => triggerKey(keyDiv, freq));
+                    keyDiv.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyDiv, freq); });
+                    
+                    board.appendChild(keyDiv);
                 }
-                await new Promise(r => setTimeout(r, delays[i]));
+            });
+        }
+
+        // سیستمی دەنگی Web Audio API
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playTone(frequency) {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = currentWave;
+            osc.frequency.value = frequency;
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.7, now + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+            osc.start(now);
+            osc.stop(now + 1.2);
+        }
+
+        // لێدانی دوگمە و تۆمارکردن
+        let isRecording = false;
+        let recordedNotes = [];
+        let recordStartTime = 0;
+
+        function triggerKey(keyElement, freq) {
+            playTone(freq);
+            keyElement.classList.add('active');
+            setTimeout(() => keyElement.classList.remove('active'), 150);
+
+            if (isRecording) {
+                const noteName = keyElement.getAttribute('data-note');
+                const timeElapsed = Date.now() - recordStartTime;
+                recordedNotes.push({ note: noteName, freq: freq, time: timeElapsed });
             }
         }
 
-        async function generateIslamicAdvice() {
-            const promptInput = document.getElementById('dreamInput').value.trim();
-            const responseBox = document.getElementById('aiResponseBox');
-            const btn = document.getElementById('getAiAdviceBtn');
+        // کۆنتڕۆڵی ئۆکتاڤ
+        function changeOctave(dir) {
+            currentOctave += dir;
+            if (currentOctave < 2) currentOctave = 2;
+            if (currentOctave > 6) currentOctave = 6;
+            document.getElementById('octaveDisplay').innerText = `ئۆکتاڤ: ${currentOctave}`;
+            buildPiano();
+        }
 
-            if (!promptInput) return;
+        // تۆمارکردن
+        function toggleRecord() {
+            const btn = document.getElementById('recBtn');
+            const status = document.getElementById('recStatus');
+            const playBtn = document.getElementById('playRecBtn');
 
-            responseBox.classList.remove('hidden');
-            responseBox.innerHTML = '<div class="text-center text-amber-400 py-4 animate-pulse">ژیری دەستکرد خەریکی ئامادەکردنی شیکارییە...</div>';
-            btn.disabled = true;
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: `پرسیار/خەونەکە: "${promptInput}". تکایە بەپێی ئیسلام و خاڵبەندی بە کوردیی ڕوون ڕێنماییم بکە.` }] }]
-            };
-
-            try {
-                const data = await fetchGeminiWithRetry(url, payload);
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                responseBox.innerHTML = text ? text.replace(/\n/g, '<br>') : 'پەیامەکە وەرگرایەوە.';
-            } catch (err) {
-                responseBox.innerHTML = 'تکایە دووبارە هەوڵبدەرەوە.';
-            } finally {
-                btn.disabled = false;
+            if (!isRecording) {
+                isRecording = true;
+                recordedNotes = [];
+                recordStartTime = Date.now();
+                btn.innerText = 'وەستاندنی تۆمار ⏹';
+                btn.className = 'btn btn-danger';
+                status.innerText = 'لە تۆمارکردندایە...';
+                status.className = 'status-badge recording';
+                playBtn.disabled = true;
+            } else {
+                isRecording = false;
+                btn.innerText = 'تۆمارکردن ⏺';
+                btn.className = 'btn btn-primary';
+                status.innerText = `تۆمارکرا (${recordedNotes.length} نۆتە)`;
+                status.className = 'status-badge';
+                if (recordedNotes.length > 0) playBtn.disabled = false;
             }
         }
 
-        // دابەزاندنی بکئەپ
-        function exportData() {
-            const data = { goals, habits, journals, tasbihCount };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'minara_backup.json';
-            a.click();
+        function playRecording() {
+            if (recordedNotes.length === 0) return;
+            const status = document.getElementById('recStatus');
+            status.innerText = 'لە لێدانەوەدایە...';
+
+            recordedNotes.forEach(item => {
+                setTimeout(() => {
+                    playTone(item.freq);
+                    // دۆزینەوەی دوگمە و ڕووناککردنەوەی
+                    const keys = document.querySelectorAll('.key, .black-key');
+                    keys.forEach(k => {
+                        if (k.getAttribute('data-note') === item.note) {
+                            k.classList.add('active');
+                            setTimeout(() => k.classList.remove('active'), 150);
+                        }
+                    });
+                }, item.time);
+            });
+
+            setTimeout(() => {
+                status.innerText = 'تۆمارکرا';
+            }, recordedNotes[recordedNotes.length - 1].time + 500);
         }
 
-        // دەستپێکردنی سەرەتایی
-        document.getElementById('tasbihDisplay').innerText = tasbihCount;
-        document.getElementById('targetDisplay').innerText = `ئامانج: ${tasbihTarget}`;
-        renderGoals();
-        renderHabits();
-        renderJournals();
-        renderDuas();
+        // ڕێکخستنەکان
+        function toggleLabels() {
+            showKeyLabels = document.getElementById('showLabels').checked;
+            buildPiano();
+        }
+
+        function changeWaveType() {
+            currentWave = document.getElementById('waveType').value;
+        }
+
+        // کۆنترۆڵی کیبۆردی کۆمپیوتەر بۆ پیانۆکە
+        const keyMapObj = {
+            'a': 0, 'w': 1, 's': 2, 'e': 3, 'd': 4, 'f': 5,
+            't': 6, 'g': 7, 'y': 8, 'h': 9, 'u': 10, 'j': 11, 'k': 12
+        };
+
+        window.addEventListener('keydown', (e) => {
+            if (e.repeat) return; // ڕێگریکردن لە دووبارەبوونەوەی خێرا کاتێک دوگمەێک گیراوە
+            const char = e.key.toLowerCase();
+            if (keyMapObj.hasOwnProperty(char)) {
+                const index = keyMapObj[char];
+                const boardKeys = document.querySelectorAll('.key, .black-key');
+                if (boardKeys[index]) {
+                    const freq = parseFloat(boardKeys[index].getAttribute('data-freq'));
+                    triggerKey(boardKeys[index], freq);
+                }
+            }
+        });
+
+        // سیستمی وانەکان
+        let songInterval = null;
+        function loadSong(songType) {
+            const playerArea = document.getElementById('songPlayerArea');
+            const title = document.getElementById('currentSongTitle');
+            const instruction = document.getElementById('songInstruction');
+            playerArea.style.display = 'block';
+
+            let sequence = [];
+            if (songType === 'ode') {
+                title.innerText = 'ئۆدە بۆ خۆشی (Ode to Joy)';
+                instruction.innerText = 'ڕووناکی سەر دوگمەکان دەردەخات چۆن بیانژەنی...';
+                sequence = ['E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'E', 'D', 'D'];
+            } else if (songType === 'twinkle') {
+                title.innerText = 'ئەستێرەی بچووک (Twinkle Twinkle)';
+                instruction.innerText = 'بەدوای ڕووناکییەکەدا بڕۆ...';
+                sequence = ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'];
+            }
+
+            let step = 0;
+            if (songInterval) clearInterval(songInterval);
+
+            songInterval = setInterval(() => {
+                if (step >= sequence.length) {
+                    clearInterval(songInterval);
+                    return;
+                }
+                const targetNote = sequence[step];
+                const keys = document.querySelectorAll('.key, .black-key');
+                keys.forEach(k => {
+                    if (k.getAttribute('data-note') === targetNote) {
+                        k.classList.add('highlight');
+                        setTimeout(() => k.classList.remove('highlight'), 400);
+                        playTone(parseFloat(k.getAttribute('data-freq')));
+                    }
+                });
+                step++;
+            }, 600);
+        }
+
+        function stopSong() {
+            if (songInterval) clearInterval(songInterval);
+            document.getElementById('songPlayerArea').style.display = 'none';
+        }
+
+        // دروستکردنی کیبۆردەکە لە کاتی کردنەوەی پەڕەکەدا
+        window.onload = () => {
+            buildPiano();
+        };
     </script>
 </body>
 </html>
-
